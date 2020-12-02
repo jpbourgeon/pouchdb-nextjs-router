@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "scripts": {
     "build": "next build",
+    "commitlint": "commitlint",
     "dev": "next dev",
     "lint": "npm run lint:eslint && npm run lint:prettier",
     "lint:eslint": "eslint . --ext .js,.jsx,.ts,.tsx --fix --cache",
