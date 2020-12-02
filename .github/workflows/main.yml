@@ -20,5 +20,5 @@ jobs:
         uses: JulienKode/pull-request-name-linter-action@v0.2.0
       - name: Lint
         run: npm run lint
-      - name: Test
-        uses: ./github/actions/test
+      - name: Test inside docker
+        uses: ./.github/actions/test
