@@ -1,0 +1,11 @@
+{
+  "presets": ["next/babel"],
+  "plugins": [],
+  "env": {
+    "production": {
+      "plugins": [
+        "transform-remove-console"
+      ]
+    }
+  }
+}
