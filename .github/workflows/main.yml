@@ -9,8 +9,7 @@ jobs:
     steps:
       - name: Install system dependencies
         run: |
-          sudo apt-get update
-          sudo wget https://github.com/sharkdp/hyperfine/releases/download/v1.11.0/hyperfine_1.11.0_amd64.deb
+          wget https://github.com/sharkdp/hyperfine/releases/download/v1.11.0/hyperfine_1.11.0_amd64.deb
           sudo dpkg -i hyperfine_1.11.0_amd64.deb
           mkdir pouchdb-nextjs-router
 
@@ -20,6 +19,7 @@ jobs:
           node-version: "14.x"
 
       - name: Install pouchdb
+        run: |
           git clone --depth 1 https://github.com/pouchdb/pouchdb.git
           cd pouchdb
           npm install
