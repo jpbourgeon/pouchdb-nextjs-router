@@ -30,6 +30,7 @@ jobs:
         run: |
           cd pouchdb-nextjs-router
           npm ci
+          npm run build
 
       - name: Commitlint pull request name
         uses: JulienKode/pull-request-name-linter-action@v0.2.0
