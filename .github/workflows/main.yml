@@ -18,8 +18,6 @@ jobs:
           git clone --depth 1 https://github.com/pouchdb/pouchdb.git
           cd pouchdb
           npm install
-          npm run build-node
-          cd ..
 
       - name: Checkout pouchdb-nextjs-router
         uses: actions/checkout@v2
@@ -36,7 +34,11 @@ jobs:
         with:
             configuration-path: ./pouchdb-nextjs-router/commitlint.config.js
       - name: Lint
-        run: npm run lint
+        run: |
+          cd pouchdb-nextjs-router
+          npm run lint
 
       - name: Lint
-        run: npm run test
+        run: |
+          cd pouchdb-nextjs-router
+          npm run test
