@@ -23,7 +23,6 @@ jobs:
 
       - name: Install pouchdb
         run: |
-          git clone --depth 1 https://github.com/pouchdb/pouchdb.git
           cd pouchdb
           npm install
 
