@@ -27,12 +27,10 @@ npm install --save pouchdb-nextjs-router
 Create an [optional catch all API route](https://nextjs.org/docs/api-routes/dynamic-api-routes#optional-catch-all-api-routes) in your next.js app. For example `pages/api/pouchdb/[[...params]].js`.
 
 ```js
-import helmet from "helmet";
-import cors from "cors";
 import PouchDB from "pouchdb";
 import fs from "fs";
 import path from "path";
-// the router exports a basic middleware runner to use with nextjs
+// the router comes with a basic middleware runner to use with next.js
 import { runMiddleware } from "pouchdb-nextjs-router/utils";
 import pouchdbNextjsRouter from "pouchdb-nextjs-router";
 
@@ -54,24 +52,7 @@ const handler = async (req, res) => {
   try {
     // you can run any middleware before the router
     // (ex. for security: helmet, cors, custom authentication, ...)
-    // Example: helmet middleware - see <https://github.com/helmetjs/helmet>
-    await runMiddleware(req, res, helmet());
-    // Example: cors middleware - see <https://github.com/expressjs/cors>
-    await runMiddleware(
-      req,
-      res,
-      cors({
-        origin: true,
-        allowedHeaders: [
-          "Origin",
-          "X-Requested-With",
-          "Content-Type",
-          "Accept",
-        ],
-        methods: ["GET", "PUT", "POST", "DELETE", "HEAD"],
-        credentials: true,
-      })
-    );
+
     // pouchdb-nextjs-router configuration
     req.locals = {
       nextPouchdbRouter: {
@@ -89,6 +70,7 @@ const handler = async (req, res) => {
         limit: "1mb",
       },
     };
+
     // pouchdb-nextjs-router middleware
     await runMiddleware(req, res, pouchdbNextjsRouter);
   } catch (error) {
@@ -99,7 +81,7 @@ const handler = async (req, res) => {
 export default handler;
 ```
 
-The repo is actually a nextjs app that uses pouchdb-nextjs-router, you can check the code.
+The repo is actually a next.js app that uses pouchdb-nextjs-router. You can check the code for a full example with headers setup (helmet and cors middleware).
 
 ## Testing
 
@@ -132,7 +114,7 @@ COUCH_HOST=http://host.docker.internal:3000/api/pouchdb npm run test:custom
 
 The module's performance has been tested against the reference express implementation by timing their execution against the full pouchdb test suite (1662 tests).
 
-The data below shows the result of the hyperfine benchmarking (5 rounds) inside a node:alpine docker container running on a windows 10 computer with an Intel Core i7-8750H CPU @ 2.20GHz and 16GB RAM.
+The data below shows the result of the hyperfine benchmarking inside a node:alpine docker container running on a windows 10 computer with an Intel Core i7-8750H CPU @ 2.20GHz and 16GB RAM.
 
 ```bash
 # Benchmark #1: pouchdb-express-router
