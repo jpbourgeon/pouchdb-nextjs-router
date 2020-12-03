@@ -2,6 +2,8 @@
 
 > A next.js API submodule with a CouchDB style REST interface to PouchDB
 
+![live the code](https://img.shields.io/badge/live%20the%20code-%E2%98%85%E2%98%85%E2%98%85%E2%98%85-yellow) ![Github workflow status](https://img.shields.io/github/workflow/status/jpbourgeon/pouchdb-nextjs-router/continuous-integration) ![Github workflow status](https://img.shields.io/github/package-json/v/jpbourgeon/pouchdb-nextjs-router)
+
 ## Introduction
 
 **pouchdb-nextjs-router** is a routing module that provides the minimal API to add a PouchDB HTTP endpoint to a next.js application.
