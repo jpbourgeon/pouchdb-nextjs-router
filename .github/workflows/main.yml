@@ -1,0 +1,49 @@
+name: continuous-integration
+
+on:
+  pull_request:
+    types: ["opened", "edited", "reopened", "synchronize"]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Node.js 14.x
+        uses: actions/setup-node@v2.1.2
+        with:
+          node-version: "14.x"
+
+      - name: Checkout pouchdb
+        run: git clone --depth 1 https://github.com/pouchdb/pouchdb.git
+
+      - name: Checkout pouchdb-nextjs-router
+        uses: actions/checkout@v2
+        with:
+          path: 'pouchdb-nextjs-router'
+
+      - name: Install pouchdb
+        run: |
+          cd pouchdb
+          npm install
+
+      - name: Install pouchdb-nextjs-router
+        run: |
+          cd pouchdb-nextjs-router
+          npm ci
+          npm run build
+
+      - name: Commitlint pull request name
+        uses: JulienKode/pull-request-name-linter-action@v0.2.0
+        with:
+            configuration-path: ./pouchdb-nextjs-router/commitlint.config.js
+
+      - name: Lint pouchdb-nextjs-router
+        run: |
+          cd pouchdb-nextjs-router
+          npm run lint
+
+      - name: Test pouchdb-nextjs-router against pouchdb testsuite
+        run: |
+          cd pouchdb-nextjs-router
+          cp ./bin/run-test.sh ../pouchdb/bin/run-test.sh
+          npm run test
