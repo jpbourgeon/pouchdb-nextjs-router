@@ -1,4 +1,4 @@
-name: gh-actions
+name: CI
 on:
   pull_request:
     types: ["opened", "edited", "reopened", "synchronize"]
@@ -6,19 +6,37 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    name: pouchdb-nextjs-router
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Use Node.js
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo wget https://github.com/sharkdp/hyperfine/releases/download/v1.11.0/hyperfine_1.11.0_amd64.deb
+          sudo dpkg -i hyperfine_1.11.0_amd64.deb
+          mkdir pouchdb-nextjs-router
+
+      - name: Setup Node.js
         uses: actions/setup-node@v2.1.2
         with:
-          node-version: "12.x"
+          node-version: "14.x"
+
+      - name: Install pouchdb
+          git clone --depth 1 https://github.com/pouchdb/pouchdb.git
+          cd pouchdb
+          npm install
+          npm run build-node
+
+      - name: Checkout pouchdb-nextjs-router
+        uses: actions/checkout@v2
+        with:
+          path: 'pouchdb-nextjs-router'
+
       - name: Install dependencies
-        run: npm ci
+        run: |
+          cd ../pouchdb-nextjs-router
+          npm ci
+
       - name: Check PR Name
         uses: JulienKode/pull-request-name-linter-action@v0.2.0
+
       - name: Lint
         run: npm run lint
-      - name: Test inside docker
-        uses: ./.github/actions/test
