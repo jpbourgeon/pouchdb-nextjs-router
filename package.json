@@ -1,20 +1,39 @@
 {
   "name": "pouchdb-nextjs-router",
-  "version": "0.1.0",
+  "version": "1.0.0-beta.0",
+  "description": "A next.js API submodule with a CouchDB style REST interface to PouchDB",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jpbourgeon/pouchdb-nextjs-router.git"
+  },
+  "keywords": [
+    "pouchdb",
+    "next.js",
+    "router"
+  ],
+  "author": "jpbourgeon <jeanphilippe.bourgeon@gmail.com> (https://github.com/jpbourgeon)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jpbourgeon/pouchdb-nextjs-router/issues"
+  },
+  "homepage": "https://github.com/jpbourgeon/pouchdb-nextjs-router",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "build": "next build",
-    "commitlint": "commitlint",
     "dev": "next dev",
     "lint": "npm run lint:eslint && npm run lint:prettier",
     "lint:eslint": "eslint . --ext .js,.jsx,.ts,.tsx --fix --cache",
     "lint:prettier": "prettier --write **/*.{js,jsx,ts,tsx}",
     "release": "standard-version",
     "start": "next start",
-    "test:custom": "npm run test --prefix ../pouchdb",
     "time:custom": "TIME=1 npm run test --prefix ../pouchdb",
-    "test:express": "SERVER=express npm run test --prefix ../pouchdb",
     "time:express": "SERVER=express TIME=1 npm run test --prefix ../pouchdb",
     "time": "SERVER=pouchdb-nextjs-router TIME=1 npm run test --prefix ../pouchdb",
+    "test:custom": "npm run test --prefix ../pouchdb",
+    "test:express": "SERVER=express npm run test --prefix ../pouchdb",
     "test": "SERVER=pouchdb-nextjs-router npm run test --prefix ../pouchdb",
     "benchmark": "BENCHMARK=1 npm run test --prefix ../pouchdb"
   },

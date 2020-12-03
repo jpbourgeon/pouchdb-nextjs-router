@@ -1,6 +1,0 @@
-# action.yml
-name: 'Test'
-description: 'Tests the module against the pouchdb test suite'
-runs:
-  using: 'docker'
-  image: '../../../Dockerfile'

@@ -2,6 +2,8 @@
 
 > A next.js API submodule with a CouchDB style REST interface to PouchDB
 
+![live the code](https://img.shields.io/badge/live%20the%20code-%E2%98%85%E2%98%85%E2%98%85%E2%98%85-yellow) ![Github workflow status](https://img.shields.io/github/workflow/status/jpbourgeon/pouchdb-nextjs-router/continuous-integration) ![Github workflow status](https://img.shields.io/github/package-json/v/jpbourgeon/pouchdb-nextjs-router)
+
 ## Introduction
 
 **pouchdb-nextjs-router** is a routing module that provides the minimal API to add a PouchDB HTTP endpoint to a next.js application.
@@ -24,18 +26,19 @@ npm install --save pouchdb-nextjs-router
 
 ## Example usage
 
-Create a [optional catch all API route](https://nextjs.org/docs/api-routes/dynamic-api-routes#optional-catch-all-api-routes) in your next.js app. For example `pages/api/pouchdb/[[...params]].js`.
+Create an [optional catch all API route](https://nextjs.org/docs/api-routes/dynamic-api-routes#optional-catch-all-api-routes) in your next.js app. For example `pages/api/pouchdb/[[...params]].js`.
 
 ```js
-import helmet from "helmet";
-import cors from "cors";
 import PouchDB from "pouchdb";
-import { runMiddleware } from "pouchdb-nextjs-router/utils"; // the router exports a basic middleware runner to use with nextjs
-import pouchdbNextjsRouter from "pouchdb-nextjs-router";
 import fs from "fs";
 import path from "path";
+// the router comes with a basic middleware runner to use with next.js
+import { runMiddleware } from "pouchdb-nextjs-router/utils";
+import pouchdbNextjsRouter from "pouchdb-nextjs-router";
 
-// disable nextjs body auto-parsing: pouchdb-nextjs-router uses its own body-parser instance, because it needs to parse raw bodies to deal with attachments
+// disable nextjs body auto-parsing: pouchdb-nextjs-router uses
+// its own body-parser instance, because it needs to parse raw bodies
+// to deal with attachments
 export const config = {
   api: {
     bodyParser: false,
@@ -49,34 +52,27 @@ const PouchDBInstance = PouchDB.defaults({ prefix });
 
 const handler = async (req, res) => {
   try {
-    // you can run any middleware before the router (ex. for security: helmet, cors, custom authentication, ...)
-    // Example: helmet middleware - see <https://github.com/helmetjs/helmet>
-    await runMiddleware(req, res, helmet());
-    // Example: cors middleware - see <https://github.com/expressjs/cors>
-    await runMiddleware(
-      req,
-      res,
-      cors({
-        origin: true,
-        allowedHeaders: [
-          "Origin",
-          "X-Requested-With",
-          "Content-Type",
-          "Accept",
-        ],
-        methods: ["GET", "PUT", "POST", "DELETE", "HEAD"],
-        credentials: true,
-      })
-    );
+    // you can run any middleware before the router
+    // (ex. for security: helmet, cors, custom authentication, ...)
+
     // pouchdb-nextjs-router configuration
     req.locals = {
       nextPouchdbRouter: {
-        routerPrefix: "/api/pouchdb", // mandatory; the api root path where pouchdb-nextjs-router is installed and running
-        PouchDB: PouchDBInstance, // mandatory; the PouchDB instance to be used
-        paramsName: "params", //optional; the name of the parameters slug you specified in your route; expected to be "params" if undefined
-        limit: "1mb", //optional; body size limit for json body and attachment raw body according to the body-parser package's syntax; defaults to "1mb" if undefined
+        // mandatory; the api root path where pouchdb-nextjs-router
+        // is installed and running
+        routerPrefix: "/api/pouchdb",
+        // mandatory; the PouchDB instance to be used
+        PouchDB: PouchDBInstance,
+        // optional; the name of the parameters slug you specified
+        // in your route; expected to be "params" if undefined
+        paramsName: "params",
+        // optional; body size limit for json body and attachment raw
+        // body according to the body-parser package's syntax;
+        // defaults to "1mb" if undefined
+        limit: "1mb",
       },
     };
+
     // pouchdb-nextjs-router middleware
     await runMiddleware(req, res, pouchdbNextjsRouter);
   } catch (error) {
@@ -87,7 +83,7 @@ const handler = async (req, res) => {
 export default handler;
 ```
 
-The repo is actually a nextjs app that uses pouchdb-nextjs-router, you can check the code.
+The repo is actually a next.js app that uses pouchdb-nextjs-router. You can check the code for a full example with headers setup (helmet and cors middleware).
 
 ## Testing
 
@@ -120,19 +116,20 @@ COUCH_HOST=http://host.docker.internal:3000/api/pouchdb npm run test:custom
 
 The module's performance has been tested against the reference express implementation by timing their execution against the full pouchdb test suite (1662 tests).
 
-The data below shows the result of the hyperfine benchmarking (5 rounds) inside a node:alpine docker container running on a windows 10 computer with an Intel Core i7-8750H CPU @ 2.20GHz and 16GB RAM.
+The data below shows the result of the hyperfine benchmarking inside a node:alpine docker container running on a windows 10 computer with an Intel Core i7-8750H CPU @ 2.20GHz and 16GB RAM.
 
 ```bash
 # Benchmark #1: pouchdb-express-router
-  Time (mean ± δ):      130.241 s ± 10.069 s      [User: 42.057 s, System: 8.883 s]
-  Range (min … max):    125.980 s … 158.779 s     10 runs
+  Time (mean ± δ):    130.241 s ± 10.069 s   [User: 42.057 s, System: 8.883 s]
+  Range (min … max):  125.980 s … 158.779 s  10 runs
 
 # Benchmark #2: pouchdb-nextjs-router
-  Time (mean ± δ):      137.238 s ± 2.083 s      [User: 44.053 s, System: 9.215 s]
-  Range (min … max):    133.924 s … 140.000 s    10 runs
+  Time (mean ± δ):    137.238 s ± 2.083 s    [User: 44.053 s, System: 9.215 s]
+  Range (min … max):  133.924 s … 140.000 s  10 runs
 
 # Summary
-  pouchdb-express-router ran 1.05 ± 0.08 times faster than pouchdb-nextjs-router
+  pouchdb-express-router ran 1.05 ± 0.08 times faster
+  than pouchdb-nextjs-router
 ```
 
 Pouchdb-nextjs-router is slightly slower than its express counterpart.
@@ -145,10 +142,13 @@ You can benchmark the module after building the docker image:
 # Build the docker image
 docker build --pull --rm -f "Dockerfile" -t pouchdbnextjsrouter:latest "."
 
-# Time pouchdb-nextjs-router
+# Benchmark pouchdb-nextjs-router against pouchdb-express-router
+docker run --rm pouchdbnextjsrouter npm run benchmark
+
+# Time pouchdb-nextjs-router only
 docker run --rm pouchdbnextjsrouter time
 
-# Time pouchdb-express-router
+# Time pouchdb-express-router only
 docker run --rm pouchdbnextjsrouter npm run time:express
 
 # Time a custom server
@@ -156,10 +156,6 @@ docker run --rm pouchdbnextjsrouter npm run time:express
 # replace the COUCH_HOST url in the example below
 docker run --rm -it pouchdbnextjsrouter bash
 COUCH_HOST=http://host.docker.internal:3000/api/pouchdb npm run time:custom
-
-# Benchmark pouchdb-nextjs-router against pouchdb-express-router
-docker run --rm pouchdbnextjsrouter npm run benchmark
-
 ```
 
 ## Contributing
