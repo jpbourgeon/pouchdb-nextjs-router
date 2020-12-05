@@ -32,10 +32,10 @@ Create an [optional catch all API route](https://nextjs.org/docs/api-routes/dyna
 import PouchDB from "pouchdb";
 import fs from "fs";
 import path from "path";
-// the router also exports a basic middleware runner to use with nextjs
 import pouchdbNextjsRouter, {
+  // the router also exports a basic middleware runner to use with nextjs
   runMiddleware,
-} from "pouchdb-nextjs-router/utils";
+} from "pouchdb-nextjs-router";
 
 // disable nextjs body auto-parsing: pouchdb-nextjs-router uses
 // its own body-parser instance, because it needs to parse raw bodies
