@@ -163,6 +163,7 @@ COUCH_HOST=http://host.docker.internal:3000/api/pouchdb npm run time:custom
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.  
 Please make sure that the package still passes the latest full pouchdb test suite before submitting.
+Your pull request name must respect the [@commitlint/config-conventional](https://github.com/conventional-changelog/commitlint/tree/master/%40commitlint/config-conventional) syntax.
 
 ## License
 
