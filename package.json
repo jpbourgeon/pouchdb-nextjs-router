@@ -1,6 +1,6 @@
 {
   "name": "pouchdb-nextjs-router",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "description": "A next.js API submodule with a CouchDB style REST interface to PouchDB",
   "repository": {
     "type": "git",
@@ -24,7 +24,7 @@
   ],
   "scripts": {
     "build": "next build",
-    "build:commonjs": "rimraf dist && babel lib --out-dir dist",
+    "build:commonjs": "rimraf dist && babel --plugins transform-remove-console lib --out-dir dist",
     "dev": "next dev",
     "lint": "npm run lint:eslint && npm run lint:prettier",
     "lint:eslint": "eslint . --ext .js,.jsx,.ts,.tsx --fix --cache",
