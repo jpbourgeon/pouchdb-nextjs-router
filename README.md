@@ -32,9 +32,10 @@ Create an [optional catch all API route](https://nextjs.org/docs/api-routes/dyna
 import PouchDB from "pouchdb";
 import fs from "fs";
 import path from "path";
-// the router comes with a basic middleware runner to use with next.js
-import { runMiddleware } from "pouchdb-nextjs-router/utils";
-import pouchdbNextjsRouter from "pouchdb-nextjs-router";
+// the router also exports a basic middleware runner to use with nextjs
+import pouchdbNextjsRouter, {
+  runMiddleware,
+} from "pouchdb-nextjs-router/utils";
 
 // disable nextjs body auto-parsing: pouchdb-nextjs-router uses
 // its own body-parser instance, because it needs to parse raw bodies
@@ -160,8 +161,11 @@ COUCH_HOST=http://host.docker.internal:3000/api/pouchdb npm run time:custom
 
 ## Contributing
 
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.  
-Please make sure that the package still passes the latest full pouchdb test suite before submitting.
+Pull requests are welcome.
+
+- For major changes, please open an issue first to discuss what you would like to change.
+- Your pull request name must respect the [@commitlint/config-conventional](https://github.com/conventional-changelog/commitlint/tree/master/%40commitlint/config-conventional) syntax.
+- Your pull request must pass the latest full pouchdb test suite.
 
 ## License
 
