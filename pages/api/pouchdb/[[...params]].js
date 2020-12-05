@@ -1,8 +1,7 @@
 import helmet from "helmet";
 import cors from "cors";
 import PouchDB from "pouchdb";
-import { runMiddleware } from "lib/utils"; // the router exports a basic middleware runner to use with nextjs
-import pouchdbNextjsRouter from "lib";
+import pouchdbNextjsRouter, { runMiddleware } from "lib"; // the router also exports a basic middleware runner to use with nextjs
 import fs from "fs";
 import path from "path";
 
