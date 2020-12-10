@@ -29,6 +29,7 @@ if [ "$BENCHMARK" == 1 ]; then
   done
   echo "EXPRESS started :)"
 
+
   # START NEXTJS
   npm start --prefix ../pouchdb-nextjs-router -- --port 3001 &
   NEXTJS_PID=$!
