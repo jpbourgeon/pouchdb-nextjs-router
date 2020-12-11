@@ -2,7 +2,7 @@
 
 > A next.js API submodule with a CouchDB style REST interface to PouchDB
 
-![live the code](https://img.shields.io/badge/live%20the%20code-%E2%98%85%E2%98%85%E2%98%85%E2%98%85-yellow) ![Github workflow status](https://img.shields.io/github/workflow/status/jpbourgeon/pouchdb-nextjs-router/continuous-integration) ![Github workflow status](https://img.shields.io/github/package-json/v/jpbourgeon/pouchdb-nextjs-router)
+![live the code](https://img.shields.io/badge/live%20the%20code-%E2%98%85%E2%98%85%E2%98%85%E2%98%85-yellow) ![Github workflow status](https://img.shields.io/github/workflow/status/jpbourgeon/pouchdb-nextjs-router/continuous-integration) [![Version](https://img.shields.io/github/package-json/v/jpbourgeon/pouchdb-nextjs-router)](https://www.npmjs.com/package/pouchdb-nextjs-router)
 
 ## Introduction
 
@@ -115,27 +115,18 @@ COUCH_HOST=http://host.docker.internal:3000/api/pouchdb npm run test:custom
 
 ## Performance
 
-The module's performance has been tested against the reference express implementation by timing their execution against the full pouchdb test suite (1662 tests).
+The module's performance has been tested against the reference express implementation by timing their respective execution against the full pouchdb test suite (1662 tests).
 
 The data below shows the result of the hyperfine benchmarking inside a node:alpine docker container running on a windows 10 computer with an Intel Core i7-8750H CPU @ 2.20GHz and 16GB RAM.
 
-```bash
-# Benchmark #1: pouchdb-express-router
-  Time (mean ± δ):    130.241 s ± 10.069 s   [User: 42.057 s, System: 8.883 s]
-  Range (min … max):  125.980 s … 158.779 s  10 runs
-
-# Benchmark #2: pouchdb-nextjs-router
-  Time (mean ± δ):    137.238 s ± 2.083 s    [User: 44.053 s, System: 9.215 s]
-  Range (min … max):  133.924 s … 140.000 s  10 runs
-
-# Summary
-  pouchdb-express-router ran 1.05 ± 0.08 times faster
-  than pouchdb-nextjs-router
-```
+| Router                 |         Mean [s] | Min [s] | Max [s] |     Relative |
+| :--------------------- | ---------------: | ------: | ------: | -----------: |
+| pouchdb-express-router | 124.677 .. 5.116 | 121.059 | 128.294 |         1.00 |
+| pouchdb-nextjs-router  | 129.068 .. 0.939 | 128.404 | 129.733 | 1.04 .. 0.04 |
 
 Pouchdb-nextjs-router is slightly slower than its express counterpart.
 
-I think this overhead is because the module uses its own internal router. It is needed to make the module atomic and packageable, instead of making a bunch of undistributable nextjs api routes. I tested two different routers and picked the fastest for that use case. You are welcome to suggest an alternative that would improve the router's performance.
+This 4% overhead is most certainly due to the module running its own internal router on top of the next.js one. It is needed however, to make the module atomic and packageable, instead of spreading the code through a bunch of undistributable nextjs api routes. I tested two different routers (regexp based and tree based) and picked the fastest for that use case (regexp based). You are welcome to suggest an alternative that would improve the router's performance.
 
 You can benchmark the module after building the docker image:
 
@@ -169,4 +160,4 @@ Pull requests are welcome.
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT](https://github.com/jpbourgeon/pouchdb-nextjs-router/blob/main/LICENSE.txt)
