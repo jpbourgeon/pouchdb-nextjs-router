@@ -20,7 +20,7 @@ COPY . .
 RUN npm run build
 
 # COPY OUR OWN TEST RUNNERS 
-COPY ./bin/run-test.sh ../pouchdb/bin/run-test.sh
+COPY ./bin/* ../pouchdb/bin/
 
 
 # RUN THE TESTS BY DEFAULT
