@@ -19,7 +19,7 @@ module.exports = {
       },
     },
   },
-  plugins: ["@babel", "import", "promise", "react", "react-hooks", "jsx-a11y"],
+  plugins: ["@babel", "import"],
   extends: [
     "eslint:recommended",
     "plugin:import/errors",
@@ -29,6 +29,5 @@ module.exports = {
     "plugin:react-hooks/recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:prettier/recommended", // finir la configuration avec prettier
-    "prettier/react",
   ],
 };
