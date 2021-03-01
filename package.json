@@ -55,7 +55,7 @@
     "@babel/core": "^7.12.17",
     "@babel/eslint-parser": "^7.12.17",
     "@babel/eslint-plugin": "^7.12.13",
-    "@commitlint/config-conventional": "^11.0.0",
+    "@commitlint/config-conventional": "^12.0.1",
     "babel-plugin-transform-remove-console": "^6.9.4",
     "cors": "^2.8.5",
     "eslint": "^7.20.0",
