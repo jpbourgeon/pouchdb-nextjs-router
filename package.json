@@ -1,6 +1,6 @@
 {
   "name": "pouchdb-nextjs-router",
-  "version": "1.0.0-beta.4",
+  "version": "1.0.0-beta.5",
   "description": "A next.js API submodule with a CouchDB style REST interface to PouchDB",
   "repository": {
     "type": "git",
@@ -23,21 +23,21 @@
     "dist"
   ],
   "scripts": {
-    "build": "next build",
+    "benchmark": "BENCHMARK=1 npm run test --prefix ../pouchdb",
     "build:commonjs": "rimraf dist && babel --plugins transform-remove-console lib --out-dir dist",
+    "build": "next build",
     "dev": "next dev",
-    "lint": "npm run lint:eslint && npm run lint:prettier",
     "lint:eslint": "eslint . --ext .js,.jsx,.ts,.tsx --fix --cache",
     "lint:prettier": "prettier --write **/*.{js,jsx,ts,tsx}",
-    "release": "standard-version",
+    "lint": "npm run lint:eslint && npm run lint:prettier",
     "start": "next start",
-    "time:custom": "TIME=1 npm run test --prefix ../pouchdb",
-    "time:express": "SERVER=express TIME=1 npm run test --prefix ../pouchdb",
-    "time": "SERVER=pouchdb-nextjs-router TIME=1 npm run test --prefix ../pouchdb",
     "test:custom": "npm run test --prefix ../pouchdb",
     "test:express": "SERVER=express npm run test --prefix ../pouchdb",
     "test": "SERVER=pouchdb-nextjs-router npm run test --prefix ../pouchdb",
-    "benchmark": "BENCHMARK=1 npm run test --prefix ../pouchdb"
+    "time:custom": "TIME=1 npm run test --prefix ../pouchdb",
+    "time:express": "SERVER=express TIME=1 npm run test --prefix ../pouchdb",
+    "time": "SERVER=pouchdb-nextjs-router TIME=1 npm run test --prefix ../pouchdb",
+    "version": "auto-changelog -p && git add CHANGELOG.md"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
@@ -47,8 +47,8 @@
   "peerDependencies": {
     "next": "^10.0.7",
     "pouchdb": "^7.0.0",
-    "react": "^17.0.0",
-    "react-dom": "^17.0.0"
+    "react-dom": "^17.0.0",
+    "react": "^17.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.0",
@@ -56,24 +56,24 @@
     "@babel/eslint-parser": "^7.13.8",
     "@babel/eslint-plugin": "^7.13.0",
     "@commitlint/config-conventional": "^12.0.1",
+    "auto-changelog": "^2.2.1",
     "babel-plugin-transform-remove-console": "^6.9.4",
     "cors": "^2.8.5",
-    "eslint": "^7.21.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-promise": "^4.3.1",
-    "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint": "^7.21.0",
     "helmet": "^4.4.1",
     "next": "10.0.7",
     "node-fetch": "^2.6.1",
     "pouchdb": "^7.2.2",
     "prettier": "^2.2.1",
-    "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "rimraf": "^3.0.2",
-    "standard-version": "^9.1.1"
+    "react": "^17.0.1",
+    "rimraf": "^3.0.2"
   }
 }

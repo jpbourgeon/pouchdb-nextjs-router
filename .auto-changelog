@@ -1,0 +1,7 @@
+{
+  "commitLimit": false,
+  "ignoreCommitPattern": "^(?!(build|ci|chore|docs|feat|fix|perf|refactor|revert|style|test)).*$",
+  "output": "CHANGELOG.md",
+  "template": "compact",
+  "unreleased": true
+}
