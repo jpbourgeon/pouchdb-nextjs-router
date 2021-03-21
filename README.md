@@ -88,7 +88,7 @@ The repo is actually a next.js app that uses pouchdb-nextjs-router. You can chec
 
 ## Testing
 
-The module is automatically tested against the whole pouchdb test suite (1662 tests) before any PR merge or release.
+The module is automatically tested against the whole pouchdb test suite (+/- 1650 tests) before any PR merge or release.
 
 You can run the tests after building the docker image:
 
@@ -115,7 +115,7 @@ COUCH_HOST=http://host.docker.internal:3000/api/pouchdb npm run test:custom
 
 ## Performance
 
-The module's performance has been tested against the reference express implementation by timing their respective execution against the full pouchdb test suite (1662 tests).
+The module's performance has been tested against the reference express implementation by timing their respective execution against the full pouchdb test suite.
 
 The data below shows the result of the hyperfine benchmarking inside a node:alpine docker container running on a windows 10 computer with an Intel Core i7-8750H CPU @ 2.20GHz and 16GB RAM.
 
