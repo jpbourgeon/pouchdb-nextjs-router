@@ -1,7 +1,5 @@
 # Hooks
 
-## Definition
-
 Hook functions are used to alter the behaviour of the router without changing its inner code. They are executed before or after the matching pouchdb route core function is executed.
 
 Pre-hooks are executed before the matched core function. You can use them to do anything useful before actually reaching the database : authentication and authorisation, any kind of data checking or sanitization, antivirus scanning, etc.
