@@ -32,7 +32,7 @@ const handler = async (req, res) => {
 
     // pouchdb-nextjs-router configuration
     req.locals = {
-      nextPouchdbRouter: {
+      nextPouchDBRouter: {
         // mandatory; the api root path where pouchdb-nextjs-router
         // is installed and running
         routerPrefix: "/api/pouchdb",

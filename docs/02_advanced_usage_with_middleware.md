@@ -24,17 +24,17 @@ The middleware's `route` property is compared to the routes list. The value can 
 
 The middleware's `method` property defines which HTTP method triggers the middleware. The value can be provided as a regexp that matches one or more method available for that route, or a string that matches a specific method for that route. Every method are not available for every pouchdb route. The special method `ANY` is available as a wildcard. See below for a complete list of available routes and methods.
 
-The middleware's `handler` property is the actual function that is executed when the actual route and the middleware names match. This function receives the `req` and the `res` objects. The intended behaviour of the function is to modify the properties of `req.locals.nextPouchdbRouter` and `res.locals.nextPouchdbRouter` objects. It should not resolve the router by calling `res.status()` and/or `res.json()` directly. See the router data structure below for a description of `req.locals.nextPouchdbRouter` and `res.locals.nextPouchdbRouter` objects. The handler is called with the `runMiddleware` util function.
+The middleware's `handler` property is the actual function that is executed when the actual route and the middleware names match. This function receives the `req` and the `res` objects. The intended behaviour of the function is to modify the properties of `req.locals.nextPouchDBRouter` and `res.locals.nextPouchDBRouter` objects. It should not resolve the router by calling `res.status()` and/or `res.json()` directly. See the router data structure below for a description of `req.locals.nextPouchDBRouter` and `res.locals.nextPouchDBRouter` objects. The handler is called with the `runMiddleware` util function.
 
 For the Post-changes-middleware, you just have to provide the handler function, which works exactly the same way as regular pre-middlewares or post-middlewares.
 
 ## How to declare your middlewares
 
-Pass the middleware functions to `pouchdb-nextjs-router` inside the `req.locals.nextPouchdbRouter.middleware` property :
+Pass the middleware functions to `pouchdb-nextjs-router` inside the `req.locals.nextPouchDBRouter.middleware` property :
 
 ```js
 // pouchdb-nextjs-router configuration
-req.locals.nextPouchdbRouter.middleware: {
+req.locals.nextPouchDBRouter.middleware: {
       // pass your pre-middlewares inside this array ; order matters since every matching middlewares will be executed sequentially
       pre: [
         {
@@ -76,7 +76,7 @@ req.locals.nextPouchdbRouter.middleware: {
 When the router is called :
 
 1. The router parses the url to find a matching route. If the method is HEAD, the `headers` route is chosen. If no route could be found it defaults to the `not_found` route.
-1. Depending on the route, the query is decoded and the body is parsed as a json or a raw value. They are made available in `req.locals.nextPouchdbRouter`.
+1. Depending on the route, the query is decoded and the body is parsed as a json or a raw value. They are made available in `req.locals.nextPouchDBRouter`.
 1. The router executes any pre-middleware which name matches the identified route name. Every matching pre-middleware will be executed in their declared order, until all of them have been called or until a middleware sets the `skipOtherPreMiddleware` value to true.
 1. If `skipCoreFunction` is falsy and `res.locals.HTTPStatusCode` is lower than 400 it executes the matching route core function. Unlike middleware functions, only one matching route core function is executed during each API call.
    - Inside the `/db/_changes` route core function, the Post-changes-middleware is called just before the router sends intermediary results.
@@ -114,10 +114,10 @@ These routes behaviour should probably stay public and unchanged by any middlewa
 
 The `req` and `res` objects are passed to your middleware functions as parameters. However, you should focus on the following local objects that the router relies on:
 
-### `req.locals.nextPouchdbRouter`
+### `req.locals.nextPouchDBRouter`
 
 ```js
-req.locals.nextPouchdbRouter = {
+req.locals.nextPouchDBRouter = {
   // ## User defined parameters are provided during the initialisation of the router
   // mandatory; the api root path where pouchdb-nextjs-router is installed and running
   routerPrefix: "/api/path/to/the/router",
@@ -128,7 +128,7 @@ req.locals.nextPouchdbRouter = {
   paramsName: "params",
   limit: "1mb",
   // optional; user defined middleware functions
-  middlewares: {
+  middleware: {
     // Pre-middleware functions array
     pre : [],
     // Post-changes-middleware function
@@ -153,10 +153,10 @@ req.locals.nextPouchdbRouter = {
 };
 ```
 
-### `res.locals.nextPouchdbRouter`
+### `res.locals.nextPouchDBRouter`
 
 ```js
-res.locals.nextPouchdbRouter = {
+res.locals.nextPouchDBRouter = {
   // ## Properties used to control the behaviour of the router
   // Contains the identified route name
   routeName,
