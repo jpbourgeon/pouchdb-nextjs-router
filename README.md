@@ -4,7 +4,7 @@
 
 ![live the code](https://img.shields.io/badge/live%20the%20code-%E2%98%85%E2%98%85%E2%98%85%E2%98%85-yellow) ![Github workflow status](https://img.shields.io/github/workflow/status/jpbourgeon/pouchdb-nextjs-router/continuous-integration) [![Version](https://img.shields.io/github/package-json/v/jpbourgeon/pouchdb-nextjs-router)](https://www.npmjs.com/package/pouchdb-nextjs-router)
 
-**pouchdb-nextjs-router** is a routing module that provides the minimal API to add a PouchDB HTTP endpoint to a next.js application. It features a powerful hooking system that allows you to customize its behaviour without hacking into the module.
+**pouchdb-nextjs-router** is a routing module that provides the minimal API to add a PouchDB HTTP endpoint to a next.js application. It features a powerful middleware system that allows you to customize its behaviour without hacking into the module.
 
 It is designed to be mounted into a [next.js API route](https://nextjs.org/docs/api-routes/introduction) to provide an endpoint for PouchDB instances to sync with.
 
@@ -24,10 +24,10 @@ npm install --save pouchdb-nextjs-router
 
 ## Documentation
 
-1. [Basic usage](doc/01_basic_usage.md)
-1. [Hooks](doc/02_hooks.md)
-1. [Testing](doc/03_testing.md)
-1. [Performance](doc/04_performance.md)
+1. [Basic usage](/docs/01_basic_usage.md)
+1. [Advanced usage, with middleware](/docs/02_advanced_usage_with_middleware.md)
+1. [Testing](/docs/03_testing.md)
+1. [Performance](/docs/04_performance.md)
 
 ## Contributing
 
