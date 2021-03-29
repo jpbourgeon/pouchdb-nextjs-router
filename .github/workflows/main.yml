@@ -8,10 +8,10 @@ jobs:
   lint-and-test:
     runs-on: ubuntu-latest
     steps:
-      - name: Setup Node.js 14.x
+      - name: Setup Node.js 15.x
         uses: actions/setup-node@v2.1.5
         with:
-          node-version: "14.x"
+          node-version: "15.x"
 
       - name: Checkout pouchdb
         run: git clone --depth 1 https://github.com/pouchdb/pouchdb.git
