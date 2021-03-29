@@ -1,5 +1,5 @@
 # INSTALL SYSTEM PACKAGES ON TOP OF THE CURRENT NODE:ALPINE IMAGE
-FROM node:lts-alpine
+FROM node:current-alpine
 RUN apk update && apk add git bash curl python make g++ 
 RUN apk add hyperfine --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community
 
