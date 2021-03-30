@@ -142,13 +142,13 @@ req.locals.nextPouchDBRouter = {
 
   // the database opened with the provided pouchdb instance
   db,
-  // the query string
-  query,
-  // the parameters parsed from the query string
+  // the url params parsed by next.js
   params,
+  // the parsed query string
+  query,
   // the parsed body
   body,
-  // if the parsed body is in json or raw format
+  // wether the parsed body is in json or raw format
   isRawBody,
 };
 ```
