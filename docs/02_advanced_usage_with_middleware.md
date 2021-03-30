@@ -149,7 +149,7 @@ req.locals.nextPouchDBRouter = {
   // the parsed body
   body,
   // wether the parsed body is in json or raw format
-  isRawBody,
+  hasRawBody,
 };
 ```
 
