@@ -51,7 +51,7 @@ const handler = async (req, res) => {
     // pouchdb-nextjs-router middleware
     await runMiddleware(req, res, pouchdbNextjsRouter);
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 

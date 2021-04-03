@@ -124,6 +124,11 @@ req.locals.nextPouchDBRouter = {
   // expected to be "params" if undefined
   paramsName: "params",
   limit: "1mb",
+  //optional
+  changes: {
+    timeout, // live changes timeout in ms; defaults to 6000
+    heartbeat, // live changes hearbeat in ms; defaults to 10000
+  }
   // optional; user defined middleware functions
   middleware: {
     // `onRequest` middleware functions array
@@ -175,7 +180,7 @@ res.locals.nextPouchDBRouter = {
   status,
   // the final result sent by the router
   response,
-  // if set to true, the route response will be sent with res.send() instead of res.json()
-  responseIsNotJSON,
+  // if set to false, the route response will be sent with res.send() instead of res.json() ; defaults to true
+  responseIsJson,
 };
 ```
