@@ -8,7 +8,7 @@
 
 It is designed to be mounted into a [next.js API route](https://nextjs.org/docs/api-routes/introduction) to provide an endpoint for PouchDB instances to sync with.
 
-The code is primarily forked from [https://github.com/pouchdb/pouchdb-express-router](https://github.com/pouchdb/pouchdb-express-router).
+The code is forked from [https://github.com/pouchdb/pouchdb-express-router](https://github.com/pouchdb/pouchdb-express-router).
 
 I wrote this module because pouchdb-express-router simply doesn't work inside nextjs beyond the basic paths, and fails to pass the whole pouchdb testsuite.
 
