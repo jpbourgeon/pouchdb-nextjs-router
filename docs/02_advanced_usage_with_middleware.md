@@ -124,11 +124,6 @@ req.locals.nextPouchDBRouter = {
   // expected to be "params" if undefined
   paramsName: "params",
   limit: "1mb",
-  //optional
-  changes: {
-    timeout, // live changes timeout in ms; defaults to 6000
-    heartbeat, // live changes hearbeat in ms; defaults to 10000
-  }
   // optional; user defined middleware functions
   middleware: {
     // `onRequest` middleware functions array

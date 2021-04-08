@@ -6,12 +6,12 @@ The data below shows the result of the hyperfine benchmarking inside a node:alpi
 
 | Router                 |         Mean [s] | Min [s] | Max [s] |     Relative |
 | :--------------------- | ---------------: | ------: | ------: | -----------: |
-| pouchdb-express-router | 124.677 .. 5.116 | 121.059 | 128.294 |         1.00 |
-| pouchdb-nextjs-router  | 129.068 .. 0.939 | 128.404 | 129.733 | 1.04 .. 0.04 |
+| pouchdb-express-router | 130.485 .. 0.814 | 129.910 | 131.060 |         1.00 |
+| pouchdb-nextjs-router  | 137.951 .. 0.498 | 137.599 | 138.303 | 1.06 .. 0.01 |
 
 Pouchdb-nextjs-router is slightly slower than its express counterpart.
 
-This 4% overhead is most certainly due to the module running its own internal router on top of the next.js one. It is needed however, to make the module atomic and packageable, instead of spreading the code through a bunch of undistributable nextjs api routes. I tested two different routers (regexp based and tree based) and picked the fastest for that use case (regexp based). You are welcome to suggest an alternative that would improve the router's performance.
+This overhead is most certainly due to the module running its own internal router on top of the next.js one. It is needed however, to make the module atomic and packageable, instead of spreading the code through a bunch of undistributable nextjs api routes. I tested two different routers (regexp based and tree based) and picked the fastest for that use case (regexp based). You are welcome to suggest an alternative that would improve the router's performance.
 
 You can benchmark the module after building the docker image:
 
@@ -21,6 +21,11 @@ docker build --pull --rm -f "Dockerfile" -t pouchdbnextjsrouter:latest "."
 
 # Benchmark pouchdb-nextjs-router against pouchdb-express-router
 docker run --rm pouchdbnextjsrouter npm run benchmark
+
+# if your run the benchmark in interactive mode, you can grab the benchmark's result formatted in markdown from /usr/src/perf.md
+docker run --it pouchdbnextjsrouter bash
+npm run benchmark
+vi /usr/src/perf.md
 
 # Time pouchdb-nextjs-router only
 docker run --rm pouchdbnextjsrouter time
