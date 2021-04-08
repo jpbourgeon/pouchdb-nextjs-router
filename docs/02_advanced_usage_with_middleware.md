@@ -91,8 +91,10 @@ When the router is called :
 | `/db/_bulk_docs`             | `POST`                         | Bulk docs operations                  |
 | `/db/_changes`               | `GET`, `POST`                  | Database changes monitoring           |
 | `/db/_compact`               | `POST`                         | Database compaction                   |
+| `/db/_design/doc`            | `GET`, `PUT`, `DELETE`         | Query a design document               |
 | `/db/_design/doc/_view`      | `GET`                          | Query a design document view          |
 | `/db/_design/doc/attachment` | `GET`, `PUT`, `DELETE`         | Design document attachment operations |
+| `/db/_local/doc`             | `GET`, `PUT`, `DELETE`         | Query a local document                |
 | `/db/doc`                    | `GET`, `PUT`, `DELETE`         | Document operations                   |
 | `/db/doc/attachment`         | `GET`, `PUT`, `DELETE`         | Document attachement operations       |
 | `/db/_revs_diff`             | `POST`                         | Documents revisions diff              |
