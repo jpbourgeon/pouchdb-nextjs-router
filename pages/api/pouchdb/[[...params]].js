@@ -40,7 +40,7 @@ const handler = async (req, res) => {
     );
     // pouchdb-nextjs-router configuration
     req.locals = {
-      nextPouchdbRouter: {
+      nextPouchDBRouter: {
         routerPrefix: "/api/pouchdb", // mandatory; the api root path where pouchdb-nextjs-router is installed and running
         PouchDB: PouchDBInstance, // mandatory; the PouchDB instance to be used
         paramsName: "params", // optional; the name of the parameters slug you specified in your route; expected to be "params" if undefined

@@ -4,13 +4,11 @@
 
 ![live the code](https://img.shields.io/badge/live%20the%20code-%E2%98%85%E2%98%85%E2%98%85%E2%98%85-yellow) ![Github workflow status](https://img.shields.io/github/workflow/status/jpbourgeon/pouchdb-nextjs-router/continuous-integration) [![Version](https://img.shields.io/github/package-json/v/jpbourgeon/pouchdb-nextjs-router)](https://www.npmjs.com/package/pouchdb-nextjs-router)
 
-## Introduction
-
-**pouchdb-nextjs-router** is a routing module that provides the minimal API to add a PouchDB HTTP endpoint to a next.js application.
+**pouchdb-nextjs-router** is a routing module that provides the minimal API to add a PouchDB HTTP endpoint to a next.js application. It features a powerful middleware system that allows you to customize its behaviour without hacking into the module.
 
 It is designed to be mounted into a [next.js API route](https://nextjs.org/docs/api-routes/introduction) to provide an endpoint for PouchDB instances to sync with.
 
-The code is primarily forked from [https://github.com/pouchdb/pouchdb-express-router](https://github.com/pouchdb/pouchdb-express-router).
+The code is forked from [https://github.com/pouchdb/pouchdb-express-router](https://github.com/pouchdb/pouchdb-express-router).
 
 I wrote this module because pouchdb-express-router simply doesn't work inside nextjs beyond the basic paths, and fails to pass the whole pouchdb testsuite.
 
@@ -24,131 +22,12 @@ Install with your favorite package manager.
 npm install --save pouchdb-nextjs-router
 ```
 
-## Example usage
+## Documentation
 
-Create an [optional catch all API route](https://nextjs.org/docs/api-routes/dynamic-api-routes#optional-catch-all-api-routes) in your next.js app. For example `pages/api/pouchdb/[[...params]].js`.
-
-```js
-import PouchDB from "pouchdb";
-import fs from "fs";
-import path from "path";
-import pouchdbNextjsRouter, {
-  // the router also exports a basic middleware runner to use with nextjs
-  runMiddleware,
-} from "pouchdb-nextjs-router";
-
-// disable nextjs body auto-parsing: pouchdb-nextjs-router uses
-// its own body-parser instance, because it needs to parse raw bodies
-// to deal with attachments
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
-
-// create a PouchDB instance
-const prefix = path.normalize(".pouchdb/");
-!fs.existsSync(prefix) && fs.mkdirSync(prefix, { recursive: true });
-const PouchDBInstance = PouchDB.defaults({ prefix });
-
-const handler = async (req, res) => {
-  try {
-    // you can run any middleware before the router
-    // (ex. for security: helmet, cors, custom authentication, ...)
-
-    // pouchdb-nextjs-router configuration
-    req.locals = {
-      nextPouchdbRouter: {
-        // mandatory; the api root path where pouchdb-nextjs-router
-        // is installed and running
-        routerPrefix: "/api/pouchdb",
-        // mandatory; the PouchDB instance to be used
-        PouchDB: PouchDBInstance,
-        // optional; the name of the parameters slug you specified
-        // in your route; expected to be "params" if undefined
-        paramsName: "params",
-        // optional; body size limit for json body and attachment raw
-        // body according to the body-parser package's syntax;
-        // defaults to "1mb" if undefined
-        limit: "1mb",
-      },
-    };
-
-    // pouchdb-nextjs-router middleware
-    await runMiddleware(req, res, pouchdbNextjsRouter);
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export default handler;
-```
-
-The repo is actually a next.js app that uses pouchdb-nextjs-router. You can check the code for a full example with headers setup (helmet and cors middleware).
-
-## Testing
-
-The module is automatically tested against the whole pouchdb test suite (+/- 1650 tests) before any PR merge or release.
-
-You can run the tests after building the docker image:
-
-```bash
-# Build the docker image
-docker build --pull --rm -f "Dockerfile" -t pouchdbnextjsrouter:latest "."
-
-# Run the tests with pouchdb-nextjs-router
-docker run --rm pouchdbnextjsrouter
-
-# Run the tests with pouchdb-express-router
-docker run --rm pouchdbnextjsrouter npm run test:express
-
-# Run the container and connect to geek around
-docker run --rm -it pouchdbnextjsrouter bash
-
-# Run the tests with a custom server
-# useful if you want to test against a custom dev server on your host
-# replace the COUCH_HOST url in the example below
-docker run --rm -it pouchdbnextjsrouter bash
-COUCH_HOST=http://host.docker.internal:3000/api/pouchdb npm run test:custom
-
-```
-
-## Performance
-
-The module's performance has been tested against the reference express implementation by timing their respective execution against the full pouchdb test suite.
-
-The data below shows the result of the hyperfine benchmarking inside a node:alpine docker container running on a windows 10 computer with an Intel Core i7-8750H CPU @ 2.20GHz and 16GB RAM.
-
-| Router                 |         Mean [s] | Min [s] | Max [s] |     Relative |
-| :--------------------- | ---------------: | ------: | ------: | -----------: |
-| pouchdb-express-router | 124.677 .. 5.116 | 121.059 | 128.294 |         1.00 |
-| pouchdb-nextjs-router  | 129.068 .. 0.939 | 128.404 | 129.733 | 1.04 .. 0.04 |
-
-Pouchdb-nextjs-router is slightly slower than its express counterpart.
-
-This 4% overhead is most certainly due to the module running its own internal router on top of the next.js one. It is needed however, to make the module atomic and packageable, instead of spreading the code through a bunch of undistributable nextjs api routes. I tested two different routers (regexp based and tree based) and picked the fastest for that use case (regexp based). You are welcome to suggest an alternative that would improve the router's performance.
-
-You can benchmark the module after building the docker image:
-
-```bash
-# Build the docker image
-docker build --pull --rm -f "Dockerfile" -t pouchdbnextjsrouter:latest "."
-
-# Benchmark pouchdb-nextjs-router against pouchdb-express-router
-docker run --rm pouchdbnextjsrouter npm run benchmark
-
-# Time pouchdb-nextjs-router only
-docker run --rm pouchdbnextjsrouter time
-
-# Time pouchdb-express-router only
-docker run --rm pouchdbnextjsrouter npm run time:express
-
-# Time a custom server
-# useful if you want to test against a custom dev server on your host
-# replace the COUCH_HOST url in the example below
-docker run --rm -it pouchdbnextjsrouter bash
-COUCH_HOST=http://host.docker.internal:3000/api/pouchdb npm run time:custom
-```
+1. [Basic usage](/docs/01_basic_usage.md)
+1. [Advanced usage, with middleware](/docs/02_advanced_usage_with_middleware.md)
+1. [Testing](/docs/03_testing.md)
+1. [Performance](/docs/04_performance.md)
 
 ## Contributing
 
@@ -158,6 +37,7 @@ Pull requests are welcome.
 - Your pull request name must respect the [@commitlint/config-conventional](https://github.com/conventional-changelog/commitlint/tree/master/%40commitlint/config-conventional) syntax.
 - Your pull request must pass the latest full pouchdb test suite.
 
-## License
+## More info
 
-[MIT](https://github.com/jpbourgeon/pouchdb-nextjs-router/blob/main/LICENSE.txt)
+- [Changelog](CHANGELOG.md)
+- Licensed under the [MIT License](LICENSE.txt)
