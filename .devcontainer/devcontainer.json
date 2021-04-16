@@ -1,0 +1,18 @@
+{
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "forwardPorts": [
+    3000
+  ],
+  "extensions": [
+    "dbaeumer.vscode-eslint",
+    "stylelint.vscode-stylelint",
+    "humao.rest-client",
+    "esbenp.prettier-vscode",
+    "wix.vscode-import-cost",
+    "eg2.vscode-npm-script",
+    "christian-kohler.npm-intellisense",
+    "davraamides.todotxt-mode",
+  ],
+}

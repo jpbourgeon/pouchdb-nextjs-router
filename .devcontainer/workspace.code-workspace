@@ -1,0 +1,31 @@
+{
+	// dossiers de travail
+	"folders": [
+		{
+			"name": "ROUTER",
+			"path": "/workspaces/pouchdb-nextjs-router"
+		},
+		{
+			"name": "POUCHDB",
+			"path": "/workspaces/pouchdb"
+		}
+	],
+	"settings": {
+		// terminal
+		"terminal.integrated.cwd": "/workspaces/pouchdb-nextjs-router",
+		"files.exclude": {
+			".dropbox*": false,
+			"desktop.ini": false,
+			"*.code-workspace": false,
+			"node_modules": false,
+			"package-lock.json": false
+		},
+		// eslint / prettier
+		"editor.formatOnType": true,
+		"editor.formatOnPaste": true,
+		"editor.formatOnSave": true,
+		"editor.codeActionsOnSave": {
+			"source.fixAll": true
+		}
+	}
+}
