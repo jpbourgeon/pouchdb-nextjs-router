@@ -14,7 +14,7 @@ wget https://github.com/jesseduffield/lazygit/releases/download/v0.27.4/lazygit_
 tar -xf lazygit_0.27.4_Linux_x86_64.tar.gz --directory /usr/bin
 
 ## NPM
-sudo npm install -g npm
+sudo npm install -g npm npm-check
 
 # INSTALL AND BUILD POUCHDB FROM SOURCE
 cd /workspaces
