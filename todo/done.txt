@@ -1,0 +1,40 @@
+
+x 2020-11-04 @chore migrate the project into its own repository
+x 2020-11-24 @test test against the pouchdb test suite, inside a docker container <https://www.digitalocean.com/community/tutorials/how-to-use-the-docker-plugin-for-visual-studio-code>, <https://code.visualstudio.com/docs/containers/overview>, <https://dev.to/pavanbelagatti/getting-started-with-docker-for-developers-3apo>
+x 2020-11-26 @perf make a path-to-regexp implementation
+x 2020-11-25 @refactor +performance drop raw-body
+x 2020-11-25 @test trully automated tests
+x 2020-11-26 @refactoring codebase cleaning
+x 2020-11-26 @chore rename the project to pouchdb-nextjs-router
+x 2020-11-27 @refactoring refactor body parsing (use a middleware + variables instead of beforeAll routes)
+x 2020-11-27 @refactoring simplify the nextjs test app
+x 2020-11-28 @perf basic performance metric
+x 2020-11-28 @refactoring code cleaning
+x 2020-11-29 @perf find the fastest node http router. Result: #1 = trek-router fastest (2x find-my-way), but limited traction (60 dwn/week); #2 = find-my-way, second fastest but bigger traction (250k dwn/week)
+x 2020-11-30 @perf better console logging <https://medium.com/javascript-in-plain-english/stop-using-console-log-in-javascript-d29d6c24dc26>, <https://www.npmjs.com/package/babel-plugin-transform-remove-console> 
+x 2020-11-30 @perf make a find-my-way implementation
+x 2020-11-30 @test refactor the performance tests with the hyperfine bench <https://github.com/sharkdp/hyperfine> to compare our implementations vs the express reference
+x 2020-11-30 @chore choose a licence
+x 2020-12-02 @chore write a readme <https://www.makeareadme.com/>
+x 2020-12-02 @chore slug parameter
+x 2020-12-02 @chore git + github
+x 2020-12-03 @chore +github dependabot
+x 2020-12-03 @chore +github workflow : commmitlint, lint and test PRs before merging to branch master 
+x 2020-12-03 @chore +github protect main branch (GHA passing PR merges only) <https://medium.com/@amachreeowanate/how-to-protect-the-master-branch-on-github-ab85e9b6b03>
+x 2020-12-03 @chore register to npm and prepare the npm release
+x 2020-12-03 @chore add meaningful shields <https://shields.io/> : livethecode, github workflows status, github PR check state, github / npm latest release
+x 2020-12-03 @chore publish a standard-version <https://www.npmjs.com/package/standard-version>
+x 2020-12-03 @chore publish a github release <https://docs.github.com/en/free-pro-team@latest/github/administering-a-repository/about-releases>
+x 2020-12-03 @chore publish an npm release <https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry>, <https://docs.npmjs.com/cli/v6/configuring-npm/package-json>, <https://zellwk.com/blog/publish-to-npm/> <https://github.com/marketplace/actions/npm-publish>
+x 2020-12-05 @fix transpile to commonjs before releasing <https://medium.com/@TeeFouad/a-simple-guide-to-publishing-an-npm-package-506dd7f3c47a>
+x 2020-12-05 @fix babel remove console from dist <https://babeljs.io/docs/en/babel-plugin-transform-remove-console/>
+x 2020-12-11 @chore performance en supprimant toutes les boucles modernes possibles
+x 2020-12-11 @chore share with the community (pouchdb / nextjs)
+x 2021-02-19 @test aws dynamodb/S3 poucdhb-adapters
+x 2021-02-19 @test serverless
+x 2021-03-21 @feat cut trailing slash
+x 2021-03-29 @refactor +middlewares refactor docs
+x 2021-03-29 @refactor +middlewares define middleware configuration prototype
+x 2021-03-30 @refactor +middlewares refactor the router to fully use req.locals.nextPouchDBRouter and res.locals.nextPouchDBRouter data structure
+x 2021-03-30 @refactor +middlewares use status and data to handle errors (the sendError util becomes useless and should be removed)
+x 2021-03-30 @refactor +middlewares centralize HTTP response sending at the end of the router (except for changes longpolling)
