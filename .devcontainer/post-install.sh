@@ -20,11 +20,12 @@ sudo npm install -g npm
 cd /workspaces
 git clone --depth 1 https://github.com/pouchdb/pouchdb.git
 cd /workspaces/pouchdb
-sudo npm install
+sudo npm ci
 sudo npm run build-node
 
 
 # INSTALL THE AND BUILD THE ROUTER
 cd /workspaces/pouchdb-nextjs-router
-sudo npm install
+git fetch --all --prune
+sudo npm ci
 sudo npm run build
