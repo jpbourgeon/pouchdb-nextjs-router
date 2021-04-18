@@ -1,6 +1,5 @@
 contexts : @build, @ci, @chore, @docs, @feat, @fix, @perf, @refactor, @revert, @style, @test
 
-@chore work from a dev container <https://code.visualstudio.com/docs/remote/containers#_quick-start-open-a-git-repository-or-github-pr-in-an-isolated-container-volume>
 @feat +middlewares refactor live changes for middlewares
 @feat +middlewares implement middleware logic (pre, post-changes, post)
 @test +middlewares write middleware testing

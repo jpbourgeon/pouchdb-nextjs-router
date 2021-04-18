@@ -1,17 +1,18 @@
 #!/bin/sh
 
-## SYSTEM DEPS
 cd /home/node
+
+## SYSTEM DEPS
 apt-get update
 apt-get install git bash curl python make g++
 
 ## HYPERFINE v1.2.0
-wget https://github.com/sharkdp/hyperfine/releases/download/v1.2.0/hyperfine_1.2.0_amd64.deb
+wget -nc https://github.com/sharkdp/hyperfine/releases/download/v1.2.0/hyperfine_1.2.0_amd64.deb
 dpkg -i hyperfine_1.2.0_amd64.deb
 
-## LAZYGIT v0.27.4
-wget https://github.com/jesseduffield/lazygit/releases/download/v0.27.4/lazygit_0.27.4_Linux_x86_64.tar.gz
-tar -xf lazygit_0.27.4_Linux_x86_64.tar.gz --directory /usr/bin
+## GH CLI v1.9.1
+wget -nc https://github.com/cli/cli/releases/download/v1.9.1/gh_1.9.1_linux_amd64.deb
+dpkg -i gh_1.9.1_linux_amd64.deb
 
 ## NPM
 npm install --global npm@latest npm-check
