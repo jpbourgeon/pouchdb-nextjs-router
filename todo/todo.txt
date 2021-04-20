@@ -1,6 +1,2 @@
 contexts : @build, @ci, @chore, @docs, @feat, @fix, @perf, @refactor, @revert, @style, @test
 
-@feat +middlewares refactor live changes for middlewares
-@feat +middlewares implement middleware logic (pre, post-changes, post)
-@test +middlewares write middleware testing
-@test +misc write router implementation specific tests (trailingSpaces)

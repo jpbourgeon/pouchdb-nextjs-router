@@ -42,6 +42,7 @@ yarn-error.log*
 *.rest
 *.http
 coverage
+perf.md
 
 #database
 .pouchdb

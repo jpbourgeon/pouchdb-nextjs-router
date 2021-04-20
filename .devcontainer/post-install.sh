@@ -6,9 +6,9 @@ cd /home/node
 apt-get update
 apt-get install git bash curl python make g++
 
-## HYPERFINE v1.2.0
-wget -nc https://github.com/sharkdp/hyperfine/releases/download/v1.2.0/hyperfine_1.2.0_amd64.deb
-dpkg -i hyperfine_1.2.0_amd64.deb
+## HYPERFINE v1.11.0
+wget -nc https://github.com/sharkdp/hyperfine/releases/download/v1.11.0/hyperfine_1.11.0_amd64.deb
+dpkg -i hyperfine_1.11.0_amd64.deb
 
 ## GH CLI v1.9.1
 wget -nc https://github.com/cli/cli/releases/download/v1.9.1/gh_1.9.1_linux_amd64.deb

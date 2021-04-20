@@ -18,7 +18,7 @@ if [ "$BENCHMARK" == 1 ]; then
   export EXPRESS_HOST="http://127.0.0.1:3000"
   export NEXTJS_HOST="http://127.0.0.1:3001/api/pouchdb"
   export CURRENT_HOST=""
-  hyperfine --export-markdown /usr/src/perf.md  --warmup $WARMUP --min-runs $MINRUNS --prepare "COUCH_HOST=$EXPRESS_HOST bash ./bin/prepare-benchmark.sh" --prepare "COUCH_HOST=$NEXTJS_HOST bash ./bin/prepare-benchmark.sh" "COUCH_HOST=$EXPRESS_HOST bash ./bin/test-node.sh" "COUCH_HOST=$NEXTJS_HOST bash ./bin/test-node.sh"
+  hyperfine --export-markdown /workspaces/pouchdb-nextjs-router/perf.md  --warmup $WARMUP --min-runs $MINRUNS --prepare "COUCH_HOST=$EXPRESS_HOST bash ./bin/prepare-benchmark.sh" --prepare "COUCH_HOST=$NEXTJS_HOST bash ./bin/prepare-benchmark.sh" "COUCH_HOST=$EXPRESS_HOST bash ./bin/test-node.sh" "COUCH_HOST=$NEXTJS_HOST bash ./bin/test-node.sh"
 
   # FINALLY, KILL NEXTJS
   if [[ ! -z $NEXTJS_PID ]]; then
@@ -63,8 +63,12 @@ else
   done
   echo "Host started :)"
 
+  ########
+  # TIME #
+  ########
+
   if [ "$TIME" == 1 ]; then
-      hyperfine --export-markdown /usr/src/perf.md  --warmup $WARMUP --min-runs $MINRUNS --prepare "sync; echo 3 > sudo tee /proc/sys/vm/drop_caches" "bash ./bin/test-node.sh"
+      hyperfine --export-markdown /workspaces/pouchdb-nextjs-router/perf.md  --warmup $WARMUP --min-runs $MINRUNS --prepare "sync; echo 3 > sudo tee /proc/sys/vm/drop_caches" "bash ./bin/test-node.sh"
   else
       bash ./bin/test-node.sh
   fi

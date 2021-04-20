@@ -22,10 +22,10 @@ docker build --pull --rm -f "Dockerfile" -t pouchdbnextjsrouter:latest "."
 # Benchmark pouchdb-nextjs-router against pouchdb-express-router
 docker run --rm pouchdbnextjsrouter npm run benchmark
 
-# if your run the benchmark in interactive mode, you can grab the benchmark's result formatted in markdown from /usr/src/perf.md
+# if your run the benchmark in interactive mode, you can grab the benchmark's result formatted in markdown from /workspaces/pouchdb-nextjs-router/perf.md
 docker run --it pouchdbnextjsrouter bash
 npm run benchmark
-vi /usr/src/perf.md
+vi /workspaces/pouchdb-nextjs-router/perf.md
 
 # Time pouchdb-nextjs-router only
 docker run --rm pouchdbnextjsrouter time
