@@ -1,5 +1,7 @@
 #!/bin/bash
 
+fuser -k -n tcp 3000
+
 export CLIENT="node"
 if [ -z $WARMUP ]; then
       export WARMUP=1
@@ -22,7 +24,8 @@ if [ "$BENCHMARK" == 1 ]; then
 
   # FINALLY, KILL NEXTJS
   if [[ ! -z $NEXTJS_PID ]]; then
-    kill $NEXTJS_PID
+    # kill $NEXTJS_PID
+    fuser -k -n tcp 3000
   fi
 
 else
@@ -53,7 +56,8 @@ else
       if [ $WAITING -eq 4 ]; then
           echo "Host failed to start"
           if [[ ! -z $SERVER_PID ]]; then
-            kill $SERVER_PID
+            # kill $SERVER_PID
+            fuser -k -n tcp 3000
           fi
           exit 1
       fi
@@ -63,10 +67,6 @@ else
   done
   echo "Host started :)"
 
-  ########
-  # TIME #
-  ########
-
   if [ "$TIME" == 1 ]; then
       hyperfine --export-markdown /workspaces/pouchdb-nextjs-router/perf.md  --warmup $WARMUP --min-runs $MINRUNS --prepare "sync; echo 3 > sudo tee /proc/sys/vm/drop_caches" "bash ./bin/test-node.sh"
   else
@@ -75,7 +75,8 @@ else
 
   EXIT_STATUS=$?
   if [[ ! -z $SERVER_PID ]]; then
-    kill $SERVER_PID
+    # kill $SERVER_PID
+    fuser -k -n tcp 3000
   fi
 
   exit $EXIT_STATUS
