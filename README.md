@@ -26,10 +26,11 @@ npm install --save pouchdb-nextjs-router
 
 1. [Basic usage](/docs/01_basic_usage.md)
 1. [Advanced usage, with middleware](/docs/02_advanced_usage_with_middleware.md)
-1. [Testing](/docs/03_testing.md)
+1. [Setup the development environment](/docs/03_dev_environment_setup.md)
 1. [Performance](/docs/04_performance.md)
+1. [Testing](/docs/05_testing.md)
 
-## Contributing
+# Contributing
 
 Pull requests are welcome.
 
