@@ -52,7 +52,7 @@ const handler = async (req, res) => {
             {
               route: /\/_session/,
               method: "GET",
-              handler: async (req, res) => {
+              handler: async () => {
                 // do something here
                 console.log("onRequest");
               },
@@ -64,7 +64,7 @@ const handler = async (req, res) => {
             {
               route: "/",
               method: "GET",
-              handler: async (req, res) => {
+              handler: async () => {
                 // do something here
                 console.log("onResponse");
               },
