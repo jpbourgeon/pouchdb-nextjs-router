@@ -50,11 +50,13 @@ const handler = async (req, res) => {
           onRequest: [
             // First onRequest Middleware
             {
-              route: /\/_session/,
+              route: /^\/db$/,
               method: "GET",
-              handler: async () => {
-                // do something here
-                console.log("onRequest");
+              handler: async (req) => {
+                req.locals.nextPouchDBRouter.onRequest = {
+                  ...req.locals.nextPouchDBRouter.onRequest,
+                  firstMiddleware: "matched by regexp",
+                };
               },
             },
           ],
@@ -62,11 +64,14 @@ const handler = async (req, res) => {
           onResponse: [
             // First onResponse Middleware
             {
-              route: "/",
+              route: "/db",
               method: "GET",
-              handler: async () => {
-                // do something here
-                console.log("onResponse");
+              handler: async (req, res) => {
+                res.locals.nextPouchDBRouter.response = {
+                  ...res.locals.nextPouchDBRouter.response,
+                  onRequest: req.locals.nextPouchDBRouter.onRequest,
+                  onResponse: { firstMiddleware: "matched by string" },
+                };
               },
             },
           ],

@@ -1,7 +1,5 @@
 #!/bin/bash
 
-fuser -k -n tcp 3000
-
 export CLIENT="node"
 if [ -z $WARMUP ]; then
       export WARMUP=1
@@ -16,17 +14,17 @@ if [ "$BENCHMARK" == 1 ]; then
   # BENCHMARK #
   #############
 
+  fuser -k -n tcp 3000
+
   # RUN THE BENCHMARK
   export EXPRESS_HOST="http://127.0.0.1:3000"
   export NEXTJS_HOST="http://127.0.0.1:3001/api/pouchdb"
   export CURRENT_HOST=""
   hyperfine --export-markdown /workspaces/pouchdb-nextjs-router/perf.md  --warmup $WARMUP --min-runs $MINRUNS --prepare "COUCH_HOST=$EXPRESS_HOST bash ./bin/prepare-benchmark.sh" --prepare "COUCH_HOST=$NEXTJS_HOST bash ./bin/prepare-benchmark.sh" "COUCH_HOST=$EXPRESS_HOST bash ./bin/test-node.sh" "COUCH_HOST=$NEXTJS_HOST bash ./bin/test-node.sh"
 
-  # FINALLY, KILL NEXTJS
-  if [[ ! -z $NEXTJS_PID ]]; then
-    # kill $NEXTJS_PID
+  # FINALLY, KILL HOSTS
     fuser -k -n tcp 3000
-  fi
+    fuser -k -n tcp 3001
 
 else
 
@@ -35,10 +33,12 @@ else
   ########
 
   if [ "$SERVER" == "express" ]; then
+    fuser -k -n tcp 3000
     node ./tests/misc/pouchdb-express-router.js >/dev/null 2>/dev/null &
     export SERVER_PID=$!
     export COUCH_HOST="http://127.0.0.1:3000"
   elif [ "$SERVER" == "pouchdb-nextjs-router" ]; then
+    fuser -k -n tcp 3000
     npm start --prefix ../$SERVER >/dev/null 2>/dev/null &
     export SERVER_PID=$!
     export COUCH_HOST="http://127.0.0.1:3000/api/pouchdb"
