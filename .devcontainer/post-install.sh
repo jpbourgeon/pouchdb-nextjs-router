@@ -10,9 +10,9 @@ apt-get install git bash curl python make g++
 wget -nc https://github.com/sharkdp/hyperfine/releases/download/v1.11.0/hyperfine_1.11.0_amd64.deb
 dpkg -i hyperfine_1.11.0_amd64.deb
 
-## GH CLI v1.9.1
-wget -nc https://github.com/cli/cli/releases/download/v1.9.1/gh_1.9.1_linux_amd64.deb
-dpkg -i gh_1.9.1_linux_amd64.deb
+## GH CLI v1.9.2
+wget -nc https://github.com/cli/cli/releases/download/v1.9.2/gh_1.9.2_linux_amd64.deb
+dpkg -i gh_1.9.2_linux_amd64.deb
 
 ## NPM
 npm install --global npm@latest npm-check
