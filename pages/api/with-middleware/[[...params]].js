@@ -41,13 +41,27 @@ const handler = async (req, res) => {
     // pouchdb-nextjs-router configuration
     req.locals = {
       nextPouchDBRouter: {
-        routerPrefix: "/api/middleware", // mandatory; the api root path where pouchdb-nextjs-router is installed and running
+        routerPrefix: "/api/with-middleware", // mandatory; the api root path where pouchdb-nextjs-router is installed and running
         PouchDB: PouchDBInstance, // mandatory; the PouchDB instance to be used
         paramsName: "params", // optional; the name of the parameters slug you specified in your route; expected to be "params" if undefined
         limit: "1mb", // optional; body size limit for json body and attachment raw body according to the body-parser package's syntax; defaults to "1mb" if undefined
         middleware: {
           // `onRequest` middleware functions array
           onRequest: [
+            // SETUP SKIPPING PROPERTIES FROM QUERYSTRING
+            // /!\ DANGER : FOR TESTING PURPOSE ONLY - DO NOT ALLOW YOUR USERS TO DO THAT FROM QUERYSTRING!
+            {
+              route: /^.*$/,
+              method: /^.*$/,
+              handler: async (req, res) => {
+                if (req.query.skipOnRequestMiddleware)
+                  res.locals.nextPouchDBRouter.skipOnRequestMiddleware = true;
+                if (req.query.skipOnResponseMiddleware)
+                  res.locals.nextPouchDBRouter.skipOnResponseMiddleware = true;
+                if (req.query.skipCoreFunction)
+                  res.locals.nextPouchDBRouter.skipCoreFunction = true;
+              },
+            },
             // First onRequest Middleware
             {
               route: /^\/db$/,
@@ -55,7 +69,29 @@ const handler = async (req, res) => {
               handler: async (req) => {
                 req.locals.nextPouchDBRouter.onRequest = {
                   ...req.locals.nextPouchDBRouter.onRequest,
-                  firstMiddleware: "matched by regexp",
+                  firstMiddleware: true,
+                };
+              },
+            },
+            // Second onRequest Middleware
+            {
+              route: /^\/db$/,
+              method: "GET",
+              handler: async (req) => {
+                req.locals.nextPouchDBRouter.onRequest = {
+                  ...req.locals.nextPouchDBRouter.onRequest,
+                  secondMiddleware: true,
+                };
+              },
+            },
+            // Third onRequest Middleware
+            {
+              route: "/_session",
+              method: "GET",
+              handler: async (req) => {
+                req.locals.nextPouchDBRouter.onRequest = {
+                  ...req.locals.nextPouchDBRouter.onRequest,
+                  thirdMiddleware: true,
                 };
               },
             },
@@ -65,12 +101,30 @@ const handler = async (req, res) => {
             // First onResponse Middleware
             {
               route: "/db",
+              method: /^GET$/,
+              handler: async (req, res) => {
+                res.locals.nextPouchDBRouter.response = {
+                  ...res.locals.nextPouchDBRouter.response,
+                  onRequest: req.locals.nextPouchDBRouter?.onRequest,
+                  onResponse: {
+                    ...res.locals.nextPouchDBRouter.response?.onResponse,
+                    firstMiddleware: true,
+                  },
+                };
+              },
+            },
+            // Second onResponse Middleware
+            {
+              route: "/_session",
               method: "GET",
               handler: async (req, res) => {
                 res.locals.nextPouchDBRouter.response = {
                   ...res.locals.nextPouchDBRouter.response,
-                  onRequest: req.locals.nextPouchDBRouter.onRequest,
-                  onResponse: { firstMiddleware: "matched by string" },
+                  onRequest: req.locals.nextPouchDBRouter?.onRequest,
+                  onResponse: {
+                    ...res.locals.nextPouchDBRouter.response?.onResponse,
+                    secondMiddleware: true,
+                  },
                 };
               },
             },
@@ -78,6 +132,10 @@ const handler = async (req, res) => {
         },
       },
     };
+
+    // FORCE TRAILING SLASH
+    // /!\ FOR TESTING PURPOSE ONLY - DO NOT DO THAT ; USE NEXTJS TRAILING SLASH CONFIGURATION INSTEAD <https://nextjs.org/docs/api-reference/next.config.js/trailing-slash>
+    req.url = `${req.url}/`;
 
     // pouchdb-nextjs-router middleware
     await runMiddleware(req, res, pouchdbNextjsRouter);
