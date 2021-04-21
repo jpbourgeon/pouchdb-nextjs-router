@@ -23,7 +23,7 @@
     "dist"
   ],
   "scripts": {
-    "benchmark": "BENCHMARK=1 npm run test --prefix ../pouchdb",
+    "benchmark": "npm run test:setup && BENCHMARK=1 npm run test --prefix ../pouchdb",
     "build:commonjs": "rimraf dist && babel --plugins transform-remove-console lib --out-dir dist",
     "build": "next build",
     "dev": "next dev",
@@ -35,8 +35,8 @@
     "test:custom": "npm run test:setup && npm run test --prefix ../pouchdb",
     "test:express": "npm run test:setup && SERVER=express npm run test --prefix ../pouchdb",
     "test": "npm run test:setup && SERVER=pouchdb-nextjs-router npm run test --prefix ../pouchdb",
-    "time:custom": "TIME=1 npm run test --prefix ../pouchdb",
-    "time:express": "TIME=1 SERVER=express npm run test --prefix ../pouchdb",
+    "time:custom": "npm run test:setup && TIME=1 npm run test --prefix ../pouchdb",
+    "time:express": "npm run test:setup && TIME=1 SERVER=express npm run test --prefix ../pouchdb",
     "time": "npm run test:setup && TIME=1 SERVER=pouchdb-nextjs-router npm run test --prefix ../pouchdb",
     "version": "auto-changelog -p && git add CHANGELOG.md"
   },

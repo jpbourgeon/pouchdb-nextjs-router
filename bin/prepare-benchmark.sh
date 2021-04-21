@@ -42,7 +42,7 @@ elif [[ $COUCH_HOST == $NEXTJS_HOST && $CURRENT_HOST != $NEXTJS_HOST ]]; then
       if [ $WAITING -eq 4 ]; then
           if [[ ! -z $NEXTJS_PID ]]; then
             # kill $NEXTJS_PID
-            fuser -k -n tcp 3000
+            fuser -k -n tcp 3001
           fi
           exit 1
       fi

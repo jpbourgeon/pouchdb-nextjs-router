@@ -6,12 +6,12 @@ The data below shows the result of the hyperfine benchmarking inside a node:alpi
 
 | Router                 |        Mean [s] | Min [s] | Max [s] |    Relative |
 | :--------------------- | --------------: | ------: | ------: | ----------: |
-| pouchdb-express-router | 125.810 ± 0.230 | 125.648 | 125.973 |        1.00 |
-| pouchdb-nextjs-router  | 136.762 ± 0.697 | 136.270 | 137.255 | 1.09 ± 0.01 |
+| pouchdb-express-router | 127.933 ± 0.039 | 127.905 | 127.961 |        1.00 |
+| pouchdb-nextjs-router  | 136.456 ± 0.256 | 136.275 | 136.637 | 1.07 ± 0.00 |
 
 Pouchdb-nextjs-router is slightly slower than its express counterpart.
 
-This overhead is most certainly due to the module providing a hooking system for custom middleware and running its own internal router on top of the next.js one. It is needed however, to make the module atomic and packageable, instead of spreading the code through a bunch of undistributable nextjs api routes. I tested two different routers (regexp based and tree based) and picked the fastest for that use case (regexp based). You are welcome to suggest an alternative that would improve the router's performance.
+This overhead is most certainly due to the module providing a hooking system for custom middleware and running its own internal router on top of the next.js one. It is needed however, to make the module usable, atomic and packageable, instead of spreading the code through a bunch of undistributable nextjs api routes. I tested two different routers (regexp based and tree based) and picked the fastest for that use case (regexp based). You are welcome to suggest an alternative that would improve the router's performance.
 
 You can benchmark the module after connecting to the development container.
 
