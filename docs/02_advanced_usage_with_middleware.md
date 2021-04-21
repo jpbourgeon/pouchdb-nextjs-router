@@ -74,10 +74,10 @@ When the router is called :
 
 1. The router parses the url to find a matching route. If the method is HEAD, the `headers` route is chosen. If no route could be found it defaults to the `not_found` route.
 1. Depending on the route, the query is decoded and the body is parsed as a json or a raw value. They are made available in `req.locals.nextPouchDBRouter`.
-1. The router executes any `onRequest` middleware which name matches the identified route name. Every matching `onRequest` middleware will be executed in their declared order, until all of them have been called or until a middleware sets the `skipOtherPreMiddleware` value to true.
+1. The router executes any `onRequest` middleware which name matches the identified route name. Every matching `onRequest` middleware will be executed in their declared order, until all of them have been called or until a middleware sets the `skipOnRequestMiddleware` value to true.
 1. If `skipCoreFunction` is falsy and `res.locals.HTTPStatusCode` is lower than 400 it executes the matching route core function. Unlike middleware functions, only one matching route core function is executed during each API call.
    - Inside the `/db/_changes` route core function, the `onResponse` middlewares stack is called just before the router sends intermediate results.
-1. If `skipOtherPostMiddleware` is falsy and `res.locals.HTTPStatusCode` is lower than 400, it executes any matching `onResponse` middleware. Every matching `onResponse` middleware will be executed in their declared order, until all of them have been called or until a middleware sets the `skipOtherPostMiddleware` value to true.
+1. If `skipOnResponseMiddleware` is falsy and `res.locals.HTTPStatusCode` is lower than 400, it executes any matching `onResponse` middleware. Every matching `onResponse` middleware will be executed in their declared order, until all of them have been called or until a middleware sets the `skipOnResponseMiddleware` value to true.
 1. The router sends `res.locals.HTTPStatusCode` and the stringified `res.locals.data` as a result
 
 ## Available routes and methods
@@ -130,7 +130,7 @@ req.locals.nextPouchDBRouter = {
   middleware: {
     // `onRequest` middleware functions array
     onRequest : [],
-    // `onRequest` middlewares functions array
+    // `onResponse` middlewares functions array
     onResponse : [],
   }
 
@@ -158,11 +158,11 @@ res.locals.nextPouchDBRouter = {
   // Contains the identified route name
   routeName,
   // halts the `onRequest` middlewares matching loop after the current `onRequest` middleware execution
-  skipOtherPreMiddleware,
+  skipOnRequestMiddleware,
   // bypasses completely the route core function execution
   skipCoreFunction,
   // halts the `onResponse` middlewares matching loop after the current `onResponse` middleware execution or bypasses the whole loop completely if set from a `onRequest` middleware
-  skipOtherPostMiddleware,
+  skipOnResponseMiddleware,
 
   // ## Stores the result that will be send by the router
   // An array of headers name/value pairs to be set before sendind the response

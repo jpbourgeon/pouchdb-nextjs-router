@@ -12,7 +12,8 @@ if [[ $COUCH_HOST == $EXPRESS_HOST && $CURRENT_HOST != $EXPRESS_HOST ]]; then
   until $(curl --output /dev/null --silent --head --fail --max-time 2 $EXPRESS_HOST); do
       if [ $WAITING -eq 4 ]; then
           if [[ ! -z $EXPRESS_PID ]]; then
-            kill $EXPRESS_PID
+            # kill $EXPRESS_PID
+            fuser -k -n tcp 3000
           fi
           exit 1
       fi
@@ -28,7 +29,8 @@ elif [[ $COUCH_HOST == $NEXTJS_HOST && $CURRENT_HOST != $NEXTJS_HOST ]]; then
   # KILL EXPRESS
   EXIT_STATUS=$?
   if [[ ! -z $EXPRESS_PID ]]; then
-    kill $EXPRESS_PID
+    # kill $EXPRESS_PID
+    fuser -k -n tcp 3000
   fi
 
   # START NEXTJS
@@ -39,7 +41,8 @@ elif [[ $COUCH_HOST == $NEXTJS_HOST && $CURRENT_HOST != $NEXTJS_HOST ]]; then
   until $(curl --output /dev/null --silent --head --fail --max-time 2 $NEXTJS_HOST); do
       if [ $WAITING -eq 4 ]; then
           if [[ ! -z $NEXTJS_PID ]]; then
-            kill $NEXTJS_PID
+            # kill $NEXTJS_PID
+            fuser -k -n tcp 3001
           fi
           exit 1
       fi

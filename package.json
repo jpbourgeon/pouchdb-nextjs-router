@@ -23,7 +23,7 @@
     "dist"
   ],
   "scripts": {
-    "benchmark": "BENCHMARK=1 npm run test --prefix ../pouchdb",
+    "benchmark": "npm run test:setup && BENCHMARK=1 npm run test --prefix ../pouchdb",
     "build:commonjs": "rimraf dist && babel --plugins transform-remove-console lib --out-dir dist",
     "build": "next build",
     "dev": "next dev",
@@ -31,14 +31,13 @@
     "lint:prettier": "prettier --write **/*.{js,jsx,ts,tsx}",
     "lint": "npm run lint:eslint && npm run lint:prettier",
     "start": "next start",
-    "test:runtime": "cp /workspaces/pouchdb-nextjs-router/bin/* /workspaces/pouchdb/bin",
-    "test:custom": "npm run test:runtime && npm run test --prefix ../pouchdb",
-    "test:express": "npm run test:runtime && SERVER=express npm run test --prefix ../pouchdb",
-    "test": "npm run test:runtime && SERVER=pouchdb-nextjs-router npm run test --prefix ../pouchdb",
-    "test:ci": "SERVER=pouchdb-nextjs-router npm run test --prefix ../pouchdb",
-    "time:custom": "npm run test:runtime && TIME=1 npm run test --prefix ../pouchdb",
-    "time:express": "npm run test:runtime && SERVER=express TIME=1 npm run test --prefix ../pouchdb",
-    "time": "npm run test:runtime && SERVER=pouchdb-nextjs-router TIME=1 npm run test --prefix ../pouchdb",
+    "test:setup": "bash bin/setup-test.sh",
+    "test:custom": "npm run test:setup && npm run test --prefix ../pouchdb",
+    "test:express": "npm run test:setup && SERVER=express npm run test --prefix ../pouchdb",
+    "test": "npm run test:setup && SERVER=pouchdb-nextjs-router npm run test --prefix ../pouchdb",
+    "time:custom": "npm run test:setup && TIME=1 npm run test --prefix ../pouchdb",
+    "time:express": "npm run test:setup && TIME=1 SERVER=express npm run test --prefix ../pouchdb",
+    "time": "npm run test:setup && TIME=1 SERVER=pouchdb-nextjs-router npm run test --prefix ../pouchdb",
     "version": "auto-changelog -p && git add CHANGELOG.md"
   },
   "dependencies": {
@@ -53,10 +52,10 @@
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.13.14",
-    "@babel/core": "^7.13.15",
+    "@babel/cli": "^7.13.16",
+    "@babel/core": "^7.13.16",
     "@babel/eslint-parser": "^7.13.14",
-    "@babel/eslint-plugin": "^7.13.15",
+    "@babel/eslint-plugin": "^7.13.16",
     "@commitlint/config-conventional": "^12.1.1",
     "auto-changelog": "^2.2.1",
     "babel-plugin-transform-remove-console": "^6.9.4",
@@ -70,7 +69,7 @@
     "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "helmet": "^4.4.1",
+    "helmet": "^4.5.0",
     "next": "10.1.3",
     "node-fetch": "^2.6.1",
     "pouchdb": "^7.2.2",

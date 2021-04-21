@@ -14,16 +14,19 @@ if [ "$BENCHMARK" == 1 ]; then
   # BENCHMARK #
   #############
 
+  fuser -k -n tcp 3000
+  fuser -k -n tcp 3001
+
   # RUN THE BENCHMARK
   export EXPRESS_HOST="http://127.0.0.1:3000"
   export NEXTJS_HOST="http://127.0.0.1:3001/api/pouchdb"
   export CURRENT_HOST=""
-  hyperfine --export-markdown /usr/src/perf.md  --warmup $WARMUP --min-runs $MINRUNS --prepare "COUCH_HOST=$EXPRESS_HOST bash ./bin/prepare-benchmark.sh" --prepare "COUCH_HOST=$NEXTJS_HOST bash ./bin/prepare-benchmark.sh" "COUCH_HOST=$EXPRESS_HOST bash ./bin/test-node.sh" "COUCH_HOST=$NEXTJS_HOST bash ./bin/test-node.sh"
+  hyperfine --export-markdown /workspaces/pouchdb-nextjs-router/perf.md  --warmup $WARMUP --min-runs $MINRUNS --prepare "COUCH_HOST=$EXPRESS_HOST bash ./bin/prepare-benchmark.sh" --prepare "COUCH_HOST=$NEXTJS_HOST bash ./bin/prepare-benchmark.sh" "SERVER=express COUCH_HOST=$EXPRESS_HOST bash ./bin/test-node.sh" "SERVER=pouchdb-nextjs-router COUCH_HOST=$NEXTJS_HOST bash ./bin/test-node.sh"
+  # hyperfine --export-markdown /workspaces/pouchdb-nextjs-router/perf.md "SERVER=express COUCH_HOST=$EXPRESS_HOST bash ./bin/test-node.sh" "SERVER=pouchdb-nextjs-router COUCH_HOST=$NEXTJS_HOST bash ./bin/test-node.sh"
 
-  # FINALLY, KILL NEXTJS
-  if [[ ! -z $NEXTJS_PID ]]; then
-    kill $NEXTJS_PID
-  fi
+  # FINALLY, KILL HOSTS
+    fuser -k -n tcp 3000
+    fuser -k -n tcp 3001
 
 else
 
@@ -32,10 +35,12 @@ else
   ########
 
   if [ "$SERVER" == "express" ]; then
+    fuser -k -n tcp 3000
     node ./tests/misc/pouchdb-express-router.js >/dev/null 2>/dev/null &
     export SERVER_PID=$!
     export COUCH_HOST="http://127.0.0.1:3000"
   elif [ "$SERVER" == "pouchdb-nextjs-router" ]; then
+    fuser -k -n tcp 3000
     npm start --prefix ../$SERVER >/dev/null 2>/dev/null &
     export SERVER_PID=$!
     export COUCH_HOST="http://127.0.0.1:3000/api/pouchdb"
@@ -53,7 +58,8 @@ else
       if [ $WAITING -eq 4 ]; then
           echo "Host failed to start"
           if [[ ! -z $SERVER_PID ]]; then
-            kill $SERVER_PID
+            # kill $SERVER_PID
+            fuser -k -n tcp 3000
           fi
           exit 1
       fi
@@ -64,14 +70,15 @@ else
   echo "Host started :)"
 
   if [ "$TIME" == 1 ]; then
-      hyperfine --export-markdown /usr/src/perf.md  --warmup $WARMUP --min-runs $MINRUNS --prepare "sync; echo 3 > sudo tee /proc/sys/vm/drop_caches" "bash ./bin/test-node.sh"
+      hyperfine --export-markdown /workspaces/pouchdb-nextjs-router/perf.md  --warmup $WARMUP --min-runs $MINRUNS --prepare "sync; echo 3 > sudo tee /proc/sys/vm/drop_caches" "bash ./bin/test-node.sh"
   else
       bash ./bin/test-node.sh
   fi
 
   EXIT_STATUS=$?
   if [[ ! -z $SERVER_PID ]]; then
-    kill $SERVER_PID
+    # kill $SERVER_PID
+    fuser -k -n tcp 3000
   fi
 
   exit $EXIT_STATUS

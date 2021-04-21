@@ -1,7 +1,6 @@
+// https://code.visualstudio.com/docs/remote/devcontainerjson-reference
 {
-  "build": {
-    "dockerfile": "Dockerfile"
-  },
+  "image": "mcr.microsoft.com/vscode/devcontainers/javascript-node",
   "forwardPorts": [
     3000
   ],
@@ -15,6 +14,5 @@
     "christian-kohler.npm-intellisense",
     "davraamides.todotxt-mode",
   ],
-  // Run Bash script in .devcontainer directory
   "postCreateCommand": "/bin/bash ./.devcontainer/post-install.sh"
 }

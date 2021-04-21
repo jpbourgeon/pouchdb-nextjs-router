@@ -38,3 +38,8 @@ x 2021-03-29 @refactor +middlewares define middleware configuration prototype
 x 2021-03-30 @refactor +middlewares refactor the router to fully use req.locals.nextPouchDBRouter and res.locals.nextPouchDBRouter data structure
 x 2021-03-30 @refactor +middlewares use status and data to handle errors (the sendError util becomes useless and should be removed)
 x 2021-03-30 @refactor +middlewares centralize HTTP response sending at the end of the router (except for changes longpolling)
+x 2021-04-18 @chore work from a dev container <https://code.visualstudio.com/docs/remote/containers#_quick-start-open-a-git-repository-or-github-pr-in-an-isolated-container-volume>
+x 2021-04-19 @feat +middlewares refactor live changes for middlewares
+x 2021-04-19 @test +misc write router implementation specific tests (trailingSpaces)
+x 2021-04-19 @feat +middlewares implement middleware logic (pre, post-changes, post)
+x 2021-04-19 @test +middlewares write middleware testing
