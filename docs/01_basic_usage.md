@@ -57,5 +57,3 @@ const handler = async (req, res) => {
 
 export default handler;
 ```
-
-The repo is actually a next.js app that uses pouchdb-nextjs-router inside various API routes. You can check the code for a full example with headers setup (helmet and cors middleware).
