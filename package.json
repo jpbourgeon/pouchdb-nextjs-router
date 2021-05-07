@@ -70,6 +70,7 @@
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^4.2.0",
     "helmet": "^4.6.0",
+    "hosted-git-info": ">=3.0.8",
     "next": "^10.2.0",
     "node-fetch": "^2.6.1",
     "pouchdb": "^7.2.2",
