@@ -61,7 +61,7 @@
     "babel-plugin-transform-remove-console": "^6.9.4",
     "cors": "^2.8.5",
     "elliptic": ">=6.5.4",
-    "eslint": "^7.25.0",
+    "eslint": "^8.9.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.4.1",
