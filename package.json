@@ -71,7 +71,7 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "helmet": "^4.6.0",
     "hosted-git-info": ">=3.0.8",
-    "next": "^10.2.0",
+    "next": "^12.1.4",
     "node-fetch": "^2.6.1",
     "pouchdb": "^7.2.2",
     "prettier": "^2.2.1",
