@@ -44,6 +44,8 @@ jobs:
           npm run lint
 
       - name: Test pouchdb-nextjs-router against pouchdb testsuite
+        env:
+          BAIL: 0
         run: |
           cd pouchdb-nextjs-router
           npm run test
