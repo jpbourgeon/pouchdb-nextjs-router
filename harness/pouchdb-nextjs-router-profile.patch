@@ -1,0 +1,79 @@
+diff --git a/tests/integration/test.attachments.js b/tests/integration/test.attachments.js
+index 981ef6e2..ce969769 100644
+--- a/tests/integration/test.attachments.js
++++ b/tests/integration/test.attachments.js
+@@ -2070,6 +2070,15 @@ adapters.forEach(function (adapter) {
+           err.status.should.equal(404);
+           const body = await err.json();
+           body.reason.should.equal('missing');
++        } else if (serverType === 'pouchdb-nextjs-router') {
++          err.status.should.equal(404);
++          const body = await err.json();
++          body.should.deep.equal({
++            status: 404,
++            name: 'not_found',
++            message: 'missing',
++            error: true,
++          });
+         } else {
+           throw new Error(`No handling for server type: '${serverType}'`);
+         }
+@@ -2106,6 +2115,15 @@ adapters.forEach(function (adapter) {
+           err.status.should.equal(404);
+           const body = await err.json();
+           body.reason.should.equal('missing');
++        } else if (serverType === 'pouchdb-nextjs-router') {
++          err.status.should.equal(404);
++          const body = await err.json();
++          body.should.deep.equal({
++            status: 404,
++            name: 'not_found',
++            message: 'missing',
++            error: true,
++          });
+         } else {
+           throw new Error(`No handling for server type: '${serverType}'`);
+         }
+@@ -2142,6 +2160,15 @@ adapters.forEach(function (adapter) {
+           err.status.should.equal(404);
+           const body = await err.json();
+           body.reason.should.equal('missing');
++        } else if (serverType === 'pouchdb-nextjs-router') {
++          err.status.should.equal(404);
++          const body = await err.json();
++          body.should.deep.equal({
++            status: 404,
++            name: 'not_found',
++            message: 'missing',
++            error: true,
++          });
+         } else {
+           throw new Error(`No handling for server type: '${serverType}'`);
+         }
+@@ -2170,6 +2197,14 @@ adapters.forEach(function (adapter) {
+             error: 'not_found',
+             reason: 'missing',
+           });
++        } else if (serverType === 'pouchdb-nextjs-router') {
++          doc._attachments['foo.txt'].content_type.should.equal('text/plain');
++          JSON.parse(decodeBase64(doc._attachments['foo.txt'].data)).should.deep.equal({
++            status: 404,
++            name: 'not_found',
++            message: 'missing',
++            error: true,
++          });
+         } else {
+           throw new Error(`No handling for server type: '${serverType}'`);
+         }
+diff --git a/tests/integration/utils.js b/tests/integration/utils.js
+index 4d81fc18..44e242c8 100644
+--- a/tests/integration/utils.js
++++ b/tests/integration/utils.js
+@@ -180,6 +180,7 @@ testUtils.getServerType = async () => {
+     'couchdb',
+     'express-pouchdb',
+     'pouchdb-express-router',
++    'pouchdb-nextjs-router',
+   ];
+ 
+   const { url, options } = parseHostWithCreds(testUtils.couchHost());
