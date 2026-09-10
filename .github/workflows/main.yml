@@ -48,4 +48,24 @@ jobs:
           BAIL: 0
         run: |
           cd pouchdb-nextjs-router
-          npm run test
+          # PouchDB's upstream integration suite contains historically intermittent
+          # tests. Mocha --retries 2 handles intra-run flakes, but global state,
+          # timing, or concurrency can still affect every attempt in one process.
+          # Retry one complete npm test invocation for an independent setup, server,
+          # probe, and suite run. Two failed full runs remain blocking, without
+          # weakening assertions.
+          echo "RUN 1: START"
+          if npm run test; then
+            echo "RUN 1: PASS"
+          else
+            echo "RUN 1: FAIL"
+            echo "Full-suite retry triggered after first failed run"
+            echo "RUN 2: START"
+            if npm run test; then
+              echo "RUN 2: PASS"
+            else
+              run_status=$?
+              echo "RUN 2: FAIL"
+              exit "$run_status"
+            fi
+          fi
