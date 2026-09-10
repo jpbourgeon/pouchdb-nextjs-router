@@ -41,6 +41,8 @@ else
     export COUCH_HOST="http://127.0.0.1:3000"
   elif [ "$SERVER" == "pouchdb-nextjs-router" ]; then
     fuser -k -n tcp 3000
+    SERVER_POUCHDB_SUPPORTS_DESIGN_FILTER=$(node ../$SERVER/bin/probe-server-pouchdb.js) || exit $?
+    export SERVER_POUCHDB_SUPPORTS_DESIGN_FILTER
     npm start --prefix ../$SERVER >/dev/null 2>/dev/null &
     export SERVER_PID=$!
     export COUCH_HOST="http://127.0.0.1:3000/api/pouchdb"
