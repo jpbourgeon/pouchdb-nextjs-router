@@ -41,9 +41,9 @@
     "version": "auto-changelog -p && git add CHANGELOG.md"
   },
   "dependencies": {
-    "body-parser": "^1.19.0",
-    "multiparty": "^4.2.2",
-    "path-to-regexp": "^6.2.0"
+    "body-parser": "^2.3.0",
+    "multiparty": "^4.3.1",
+    "path-to-regexp": "^8.4.2"
   },
   "peerDependencies": {
     "next": "^10.1.3",
