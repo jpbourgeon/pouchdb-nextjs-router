@@ -25,6 +25,7 @@ jobs:
         run: |
           cd pouchdb
           npm install
+          npm run build
 
       - name: Install pouchdb-nextjs-router
         run: |
