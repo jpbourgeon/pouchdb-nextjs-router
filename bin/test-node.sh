@@ -12,6 +12,7 @@ fi
 
 ./node_modules/.bin/mocha \
     $BAIL_OPT \
+    --exit \
     --timeout $TIMEOUT \
     --require=./tests/integration/node.setup.js \
     --reporter=spec \
