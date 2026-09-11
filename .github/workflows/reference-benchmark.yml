@@ -67,11 +67,13 @@ jobs:
           npm ci
           npm run build
 
-      - name: Validate the complete PouchDB suite outside the benchmark
+      - name: Validate the reference PouchDB suite outside the benchmark
         working-directory: pouchdb-nextjs-router
         env:
           BAIL: 0
+          REFERENCE_BENCHMARK: 1
         run: |
+          set -o pipefail
           echo "Functional validation SEED: $SEED"
           npm run test 2>&1 | tee ../functional-validation.log
 

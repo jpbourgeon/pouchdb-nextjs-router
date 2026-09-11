@@ -30,11 +30,14 @@ work in one job on one machine:
 1. Check out the router commit selected at dispatch and the pinned PouchDB test
    commit.
 2. Install and build both dependency trees with Node.js 24.19.0.
-3. Run the complete functional PouchDB suite with the selected `SEED`. This
-   validation is outside all timings and must finish with zero failures.
+3. Run the functional PouchDB suite with the selected `SEED`. This validation
+   is outside all timings and must finish with zero failures after the single
+   upstream quarantine documented below is applied.
 4. Prepare the common harness. The router-specific
    `tests/integration/test.pouchdb-nextjs-router.js` file is excluded from both
-   measured sides; no other workload exclusion differs.
+   measured sides. The exact upstream test quarantined below is excluded from
+   both the preliminary validation and the two measured sides; no workload
+   exclusion differs between Express and Next.js.
    The existing capability-gated `filter=_design` exception is evaluated under
    the same harness profile for both targets; each real server type is still
    detected from its HTTP response.
@@ -57,6 +60,29 @@ The report contains all ten durations; count, mean, median, minimum, maximum,
 and sample standard deviation for each server; the absolute and relative delta
 of means; and every paired `Bᵢ - Aᵢ` delta with its mean. Five pairs support a
 descriptive conclusion, not a sophisticated confidence interval.
+
+### Known upstream quarantine
+
+The reference workflow excludes only this test title:
+
+`test.issue3179.js-local-http #3179 conflicts synced, non-live sync`
+
+It is a known PouchDB intermittent failure tracked by
+[apache/pouchdb#8690](https://github.com/apache/pouchdb/issues/8690). In the
+pull request runs that established this quarantine, the same assertion failed
+repeatedly in ordinary CI and in the reference workflow, while other executions
+passed it or passed after a full-suite retry. Allowing it into a no-retry timing
+campaign makes campaign completion nondeterministic and does not produce a
+valid duration when it fails.
+
+The exclusion is identical for Express and Next.js and is limited to the
+reference workflow. Ordinary CI continues to execute the test with the existing
+bounded retry policy, so a persistent functional regression remains visible and
+blocking there.
+
+TODO: investigate and propose an upstream PouchDB pull request that makes this
+test reliable without weakening its conflict-synchronisation assertion. Remove
+the local quarantine once the pinned PouchDB checkout contains that correction.
 
 ## Run the reference benchmark
 

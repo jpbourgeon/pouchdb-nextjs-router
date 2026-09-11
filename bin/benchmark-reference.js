@@ -76,6 +76,10 @@ const metadata = {
   runnerImageVersion: process.env.ImageVersion || "unknown",
   runCount,
   testPattern,
+  excludedTests: [
+    "tests/integration/test.pouchdb-nextjs-router.js",
+    "test.issue3179.js-local-http #3179 conflicts synced, non-live sync",
+  ],
   mochaRetries: 0,
   mochaTimeoutMs: Number(process.env.TIMEOUT || 50000),
   mochaServerProfile: "pouchdb-nextjs-router",
@@ -364,6 +368,9 @@ function markdownReport(result) {
     `- Runner image: \`${metadata.runnerImage}\` / \`${metadata.runnerImageVersion}\``,
     `- SEED: \`${metadata.seed}\``,
     `- Runs: \`${metadata.runCount}\` per server`,
+    `- Excluded tests: ${metadata.excludedTests
+      .map((excludedTest) => `\`${excludedTest}\``)
+      .join(", ")}`,
     `- Mocha retries during measurements: \`${metadata.mochaRetries}\``,
     `- Mocha timeout: \`${metadata.mochaTimeoutMs} ms\``,
     `- Mocha server profile: \`${metadata.mochaServerProfile}\` (identical for both targets)`,
