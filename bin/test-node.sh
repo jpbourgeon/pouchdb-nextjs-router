@@ -12,8 +12,16 @@ fi
 
 if [ "$BENCHMARK" == 1 ]; then
     BENCHMARK_OPT="--ignore=tests/integration/test.pouchdb-nextjs-router.js"
+    RETRIES=0
 else
     BENCHMARK_OPT=""
+    RETRIES=2
+fi
+
+: ${BENCHMARK_TEST_PATTERN:="tests/integration/test.*.js"}
+
+if [ "$BENCHMARK" == 1 ]; then
+    echo "Benchmark Mocha: SEED=$SEED profile=$SERVER retries=$RETRIES timeout=$TIMEOUT pattern=$BENCHMARK_TEST_PATTERN ignore=tests/integration/test.pouchdb-nextjs-router.js"
 fi
 
 # PouchDB's upstream integration suite contains historically intermittent tests.
@@ -23,8 +31,8 @@ fi
     $BAIL_OPT \
     $BENCHMARK_OPT \
     --exit \
-    --retries 2 \
+    --retries $RETRIES \
     --timeout $TIMEOUT \
     --require=./tests/integration/node.setup.js \
     --reporter=spec \
-    "tests/integration/test.*.js" \
+    "$BENCHMARK_TEST_PATTERN"

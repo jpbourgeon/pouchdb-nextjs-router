@@ -23,7 +23,8 @@
     "dist"
   ],
   "scripts": {
-    "benchmark": "npm run test:setup && BENCHMARK=1 npm run test --prefix ../pouchdb",
+    "benchmark": "npm run test:setup && node bin/benchmark-reference.js",
+    "benchmark:smoke": "npm run test:setup && BENCHMARK_RUNS=1 BENCHMARK_TEST_PATTERN=tests/integration/test.active_tasks.js node bin/benchmark-reference.js",
     "build:commonjs": "rimraf dist && babel --plugins transform-remove-console lib --out-dir dist",
     "build": "next build",
     "dev": "next dev",
