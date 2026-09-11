@@ -59,7 +59,10 @@ function gitRevision(directory) {
 }
 
 const metadata = {
-  commitSha: process.env.GITHUB_SHA || gitRevision(routerRoot),
+  commitSha:
+    process.env.BENCHMARK_COMMIT_SHA ||
+    process.env.GITHUB_SHA ||
+    gitRevision(routerRoot),
   nodeVersion: process.version,
   pouchdbTestVersion: require(path.join(pouchdbRoot, "package.json")).version,
   pouchdbCommit: gitRevision(pouchdbRoot),

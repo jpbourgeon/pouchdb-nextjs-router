@@ -7,23 +7,30 @@ on:
         description: "PouchDB test seed"
         required: true
         type: string
+  pull_request:
+    types: [labeled]
 
 permissions:
   contents: read
 
 jobs:
   benchmark:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      github.event.label.name == 'benchmark'
     runs-on: ubuntu-24.04
     timeout-minutes: 90
     env:
       POUCHDB_COMMIT: 27de91f1105a8074ddd06f5a23156dd99c4eb016
-      SEED: ${{ inputs.seed }}
+      BENCHMARK_COMMIT_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+      SEED: ${{ github.event_name == 'workflow_dispatch' && inputs.seed || format('pr-{0}', github.event.pull_request.head.sha) }}
       RUNNER_LABEL: ubuntu-24.04
     steps:
       - name: Checkout pouchdb-nextjs-router
         uses: actions/checkout@v4
         with:
           path: pouchdb-nextjs-router
+          ref: ${{ env.BENCHMARK_COMMIT_SHA }}
 
       - name: Checkout the pinned PouchDB test corpus
         uses: actions/checkout@v4
@@ -39,7 +46,7 @@ jobs:
 
       - name: Expose campaign identity
         run: |
-          echo "Commit SHA: $GITHUB_SHA"
+          echo "Commit SHA: $BENCHMARK_COMMIT_SHA"
           echo "Workflow: $GITHUB_WORKFLOW"
           echo "Runner: ubuntu-24.04"
           echo "Node: $(node --version)"
@@ -81,7 +88,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: reference-benchmark-${{ github.sha }}
+          name: reference-benchmark-${{ env.BENCHMARK_COMMIT_SHA }}
           path: |
             pouchdb-nextjs-router/benchmark-results/
             functional-validation.log

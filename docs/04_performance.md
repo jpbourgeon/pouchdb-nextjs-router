@@ -23,7 +23,7 @@ remaining cost to Next.js before the paired results have been analysed.
 
 ## Reference protocol
 
-The manually dispatched `reference-benchmark` GitHub Actions workflow is the
+The explicitly triggered `reference-benchmark` GitHub Actions workflow is the
 source of record. It runs on an explicit `ubuntu-24.04` runner and performs all
 work in one job on one machine:
 
@@ -59,6 +59,15 @@ of means; and every paired `Bᵢ - Aᵢ` delta with its mean. Five pairs support
 descriptive conclusion, not a sophisticated confidence interval.
 
 ## Run the reference benchmark
+
+Before the workflow exists on the default branch, add the `benchmark` label to a
+pull request. Only the `labeled` event is observed, and the benchmark job runs
+only when that exact label is added. It checks out the pull request head SHA and
+uses the deterministic seed `pr-<head-sha>`. Removing and adding the label again
+reproduces the campaign programmatically without running it on ordinary pull
+request updates.
+
+Once the workflow exists on the default branch, it can also be run manually:
 
 1. Open **Actions → reference-benchmark → Run workflow** on GitHub.
 2. Select the commit or branch to benchmark.
