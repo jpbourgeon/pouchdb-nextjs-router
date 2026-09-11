@@ -1,7 +1,5 @@
-import helmet from "helmet";
-import cors from "cors";
 import PouchDB from "pouchdb";
-import pouchdbNextjsRouter, { runMiddleware } from "lib"; // the router also exports a basic middleware runner to use with nextjs
+import pouchdbNextjsRouter from "lib";
 import fs from "fs";
 import path from "path";
 
@@ -19,25 +17,6 @@ const PouchDBInstance = PouchDB.defaults({ prefix });
 
 const handler = async (req, res) => {
   try {
-    // you can run any middleware before the router (ex. for security: helmet, cors, custom authentication, ...)
-    // Example: helmet middleware - see <https://github.com/helmetjs/helmet>
-    await runMiddleware(req, res, helmet());
-    // Example: cors middleware - see <https://github.com/expressjs/cors>
-    await runMiddleware(
-      req,
-      res,
-      cors({
-        origin: true,
-        allowedHeaders: [
-          "Origin",
-          "X-Requested-With",
-          "Content-Type",
-          "Accept",
-        ],
-        methods: ["GET", "PUT", "POST", "DELETE", "HEAD"],
-        credentials: true,
-      })
-    );
     // pouchdb-nextjs-router configuration
     req.locals = {
       nextPouchDBRouter: {
@@ -48,7 +27,7 @@ const handler = async (req, res) => {
       },
     };
     // pouchdb-nextjs-router middleware
-    await runMiddleware(req, res, pouchdbNextjsRouter);
+    await pouchdbNextjsRouter(req, res);
   } catch (error) {
     console.log(error);
   }
