@@ -16,10 +16,8 @@ After the hot-path changes, one preliminary run observed:
 | Observed delta           | +6.132 s / +3.56% |
 
 That campaign used `WARMUP=0 MINRUNS=1`. It is a historical observation, not a
-statistically sufficient or definitive performance result. The conclusion about
-whether a stable residual difference remains is pending the reproducible campaign
-described below. In particular, the observation must not be used to attribute a
-remaining cost to Next.js before the paired results have been analysed.
+statistically sufficient or definitive performance result. The reproducible
+campaign reported below supersedes it as the reference result.
 
 ## Reference protocol
 
@@ -125,7 +123,39 @@ page-cache purge are intentionally absent from the reference path.
 
 ## Reference results
 
-The paired reference campaign has not yet completed. Once it has been analysed,
-record here the exact environment, router SHA, PouchDB commit and version, seed,
-all five measurements per server, aggregate statistics, mean differential, and
-a proportionate interpretation of whether the residual difference is stable.
+The reference campaign completed successfully in
+[GitHub Actions run 34581531596](https://github.com/jpbourgeon/pouchdb-nextjs-router/actions/runs/34581531596).
+
+- Router commit: `01a93b874e62da2bedc5fa41a49425d317d52858`
+- Runner: `ubuntu-24.04`, image version `20260907.300.1`
+- Node.js: `v24.19.0`
+- PouchDB server: `9.0.0` for both servers
+- PouchDB test checkout: `27de91f1105a8074ddd06f5a23156dd99c4eb016`
+- Seed: `pr-01a93b874e62da2bedc5fa41a49425d317d52858`
+- Preliminary validation: `1939 passing`, `43 pending`, `0 failing`
+- Measurements: five alternating pairs, `--retries 0`
+
+| Run |  Express |  Next.js |     Delta | Delta % |
+| --: | -------: | -------: | --------: | ------: |
+|   1 | 59.970 s | 64.448 s |  +4.478 s |  +7.47% |
+|   2 | 58.678 s | 64.686 s |  +6.008 s | +10.24% |
+|   3 | 62.672 s | 66.258 s |  +3.586 s |  +5.72% |
+|   4 | 59.160 s | 66.869 s |  +7.709 s | +13.03% |
+|   5 | 60.747 s | 71.597 s | +10.850 s | +17.86% |
+
+| Server  | Runs |     Mean |   Median |      Min |      Max | Sample std dev |
+| ------- | ---: | -------: | -------: | -------: | -------: | -------------: |
+| Express |    5 | 60.245 s | 59.970 s | 58.678 s | 62.672 s |        1.569 s |
+| Next.js |    5 | 66.772 s | 66.258 s | 64.448 s | 71.597 s |        2.886 s |
+
+The mean Express-to-Next.js delta is **+6.526 s / +10.83%**. The mean of the
+five paired absolute deltas is also **+6.526 s**; the mean of their individual
+relative deltas is **+10.86%**.
+
+Next.js was slower in all five pairs. The residual overhead therefore persists
+with a reproducible direction under this protocol, although its magnitude varies
+from `+5.72%` to `+17.86%` and five pairs justify only a descriptive conclusion.
+After removal of the identified router hot-path costs, the dominant remaining
+hypothesis is the Next.js HTTP envelope. This campaign does not prove that
+causality in isolation; testing the router outside Next.js belongs in a separate
+piece of work.
