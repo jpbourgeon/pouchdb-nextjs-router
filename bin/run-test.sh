@@ -9,24 +9,7 @@ if [ -z $MINRUNS ]; then
 fi
 
 if [ "$BENCHMARK" == 1 ]; then
-
-  #############
-  # BENCHMARK #
-  #############
-
-  fuser -k -n tcp 3000
-  fuser -k -n tcp 3001
-
-  # RUN THE BENCHMARK
-  export EXPRESS_HOST="http://127.0.0.1:3000"
-  export NEXTJS_HOST="http://127.0.0.1:3001/api/pouchdb"
-  export CURRENT_HOST=""
-  hyperfine --export-markdown /workspaces/pouchdb-nextjs-router/perf.md  --warmup $WARMUP --min-runs $MINRUNS --prepare "COUCH_HOST=$EXPRESS_HOST bash ./bin/prepare-benchmark.sh" --prepare "COUCH_HOST=$NEXTJS_HOST bash ./bin/prepare-benchmark.sh" "SERVER=express COUCH_HOST=$EXPRESS_HOST bash ./bin/test-node.sh" "SERVER=pouchdb-nextjs-router COUCH_HOST=$NEXTJS_HOST bash ./bin/test-node.sh"
-  # hyperfine --export-markdown /workspaces/pouchdb-nextjs-router/perf.md "SERVER=express COUCH_HOST=$EXPRESS_HOST bash ./bin/test-node.sh" "SERVER=pouchdb-nextjs-router COUCH_HOST=$NEXTJS_HOST bash ./bin/test-node.sh"
-
-  # FINALLY, KILL HOSTS
-    fuser -k -n tcp 3000
-    fuser -k -n tcp 3001
+  node ../pouchdb-nextjs-router/bin/benchmark-reference.js
 
 else
 

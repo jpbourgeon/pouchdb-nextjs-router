@@ -6,10 +6,7 @@ Create an [optional catch all API route](https://nextjs.org/docs/api-routes/dyna
 import PouchDB from "pouchdb";
 import fs from "fs";
 import path from "path";
-import pouchdbNextjsRouter, {
-  // the router also exports a basic middleware runner to use with nextjs
-  runMiddleware,
-} from "pouchdb-nextjs-router";
+import pouchdbNextjsRouter from "pouchdb-nextjs-router";
 
 // disable nextjs body auto-parsing: pouchdb-nextjs-router uses
 // its own body-parser instance, because it needs to parse raw bodies
@@ -48,8 +45,7 @@ const handler = async (req, res) => {
       },
     };
 
-    // pouchdb-nextjs-router middleware
-    await runMiddleware(req, res, pouchdbNextjsRouter);
+    await pouchdbNextjsRouter(req, res);
   } catch (error) {
     console.log(error);
   }
